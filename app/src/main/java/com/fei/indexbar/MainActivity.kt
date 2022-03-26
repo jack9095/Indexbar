@@ -9,6 +9,15 @@ import com.fei.indexbar.sidebarview.SideBarViewActivity
 
 /**
  * 网上搜 indexBar 或者 SideBar
+ *
+ * https://www.cnblogs.com/jasongaoh/p/7834234.html
+ * https://www.jianshu.com/p/af807ab6029a
+ *
+ * https://search.gitee.com/?skin=rec&type=repository&q=SideBar&lang=java
+ *
+ * 和微信通讯录一摸一样的
+ * https://gitee.com/ernestchang/Android-QuickSideBar?_from=gitee_search
+ * https://gitee.com/djun100/WaveSideBar?_from=gitee_search
  */
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
