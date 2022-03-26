@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.upuphone.core.indexbar">
+    package="com.fei.indexbar">
 
     <application
         android:allowBackup="true"
@@ -10,6 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Indexbar">
         <activity
+            android:name=".focus.FocusActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".sidebarview.SideBarViewActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -17,7 +24,13 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity> <!-- 今日头条适配方案 -->
+        <meta-data
+            android:name="design_width_in_dp"
+            android:value="360" />
+        <meta-data
+            android:name="design_height_in_dp"
+            android:value="640" />
     </application>
 
 </manifest>
