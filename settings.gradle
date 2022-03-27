@@ -18,3 +18,5 @@ rootProject.name = "Indexbar"
 include ':app'
 include ':focussidebar'
 include ':SideBarView'
+include ':quicksidebar'
+include ':waveSideBar'

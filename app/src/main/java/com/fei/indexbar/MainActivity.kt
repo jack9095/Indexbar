@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.fei.indexbar.focus.FocusActivity
+import com.fei.indexbar.quicksidebar.QuickActivity
 import com.fei.indexbar.sidebarview.SideBarViewActivity
+import com.fei.indexbar.wave.WaveActivity
 
 /**
  * 网上搜 indexBar 或者 SideBar
@@ -31,5 +33,13 @@ class MainActivity : AppCompatActivity() {
 
     fun onSideBarView(view: View) {
         startActivity(Intent(this@MainActivity, SideBarViewActivity::class.java))
+    }
+
+    fun onQuick(view: View) {
+        startActivity(Intent(this@MainActivity, QuickActivity::class.java))
+    }
+
+    fun onWave(view: View) {
+        startActivity(Intent(this@MainActivity, WaveActivity::class.java))
     }
 }

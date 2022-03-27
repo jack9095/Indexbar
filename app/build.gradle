@@ -32,6 +32,8 @@ android {
         main {
             res.srcDirs += "src/main/res-focus"
             res.srcDirs += "src/main/res-sidebarview"
+            res.srcDirs += "src/main/res-quicksidebar"
+            res.srcDirs += "src/main/res-wave"
         }
     }
 
@@ -47,6 +49,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
+    implementation 'com.google.code.gson:gson:2.9.0'
 //    今日头条适配方案
 //    implementation 'me.jessyan:autosize:1.1.2'
     implementation project(path: ':focussidebar')
@@ -54,4 +57,6 @@ dependencies {
 
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.7'
     implementation project(path: ':SideBarView')
+    implementation project(path: ':quicksidebar')
+    implementation project(path: ':waveSideBar')
 }

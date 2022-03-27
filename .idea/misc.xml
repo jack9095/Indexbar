@@ -7,8 +7,16 @@
         <entry key="app/src/main/res-focus/layout/activity_focus.xml" value="0.30104166666666665" />
         <entry key="app/src/main/res-focus/layout/activity_main.xml" value="0.30104166666666665" />
         <entry key="app/src/main/res-focus/layout/item_focus_side_bar.xml" value="0.2657407407407407" />
+        <entry key="app/src/main/res-quicksidebar/layout/activity_main.xml" value="0.30104166666666665" />
+        <entry key="app/src/main/res-quicksidebar/layout/activity_quick.xml" value="0.30104166666666665" />
+        <entry key="app/src/main/res-quicksidebar/layout/view_header.xml" value="0.30104166666666665" />
+        <entry key="app/src/main/res-quicksidebar/layout/view_item.xml" value="0.30104166666666665" />
         <entry key="app/src/main/res-sidebarview/layout/activity_bar_view.xml" value="0.30104166666666665" />
         <entry key="app/src/main/res-sidebarview/layout/item_phone_area.xml" value="0.30104166666666665" />
+        <entry key="app/src/main/res-wave/layout/activity_wave.xml" value="0.30104166666666665" />
+        <entry key="app/src/main/res-wave/layout/footer_item_default_loading.xml" value="0.30104166666666665" />
+        <entry key="app/src/main/res-wave/layout/item_city.xml" value="0.30104166666666665" />
+        <entry key="app/src/main/res-wave/layout/item_pinned_header.xml" value="0.30104166666666665" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.28541666666666665" />
       </map>
     </option>
