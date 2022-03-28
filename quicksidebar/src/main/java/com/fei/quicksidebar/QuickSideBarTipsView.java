@@ -2,8 +2,11 @@ package com.fei.quicksidebar;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.fei.quicksidebar.tipsview.QuickSideBarTipsItemView;
 
@@ -12,6 +15,7 @@ import com.fei.quicksidebar.tipsview.QuickSideBarTipsItemView;
  */
 public class QuickSideBarTipsView extends RelativeLayout {
     private QuickSideBarTipsItemView mTipsView;
+    private TextView textview;
 
     public QuickSideBarTipsView(Context context) {
         this(context, null);
@@ -27,17 +31,21 @@ public class QuickSideBarTipsView extends RelativeLayout {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        mTipsView = new QuickSideBarTipsItemView(context,attrs);
-        LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        addView(mTipsView,layoutParams);
+        LayoutInflater.from(getContext()).inflate(R.layout.view_floating_window, this, true);
+        mTipsView = findViewById(R.id.tipsView);
+        textview = findViewById(R.id.textview);
+//        mTipsView = new QuickSideBarTipsItemView(context,attrs);
+//        LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//        addView(mTipsView,layoutParams);
     }
 
 
     public void setText(String text,int poistion, float y){
         mTipsView.setText(text);
-        LayoutParams layoutParams = (LayoutParams) mTipsView.getLayoutParams();
-        layoutParams.topMargin = (int)(y - getWidth()/2.8);
-        mTipsView.setLayoutParams(layoutParams);
+        textview.setText(text);
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) textview.getLayoutParams();
+        layoutParams.topMargin = (int)(y - getWidth()/2.8 + 200);
+        textview.setLayoutParams(layoutParams);
     }
 
 
