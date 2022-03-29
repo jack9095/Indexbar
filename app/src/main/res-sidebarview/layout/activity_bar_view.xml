@@ -17,12 +17,24 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_area"
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginEnd="30dp">
 
         </androidx.recyclerview.widget.RecyclerView>
+
+        <!-- 这个是浮动的提示 ，配合字母栏实现放大浮动提示滑动到哪个字母-->
+        <!--下面的自定义属性都是默认的,可以不写-->
+        <com.fei.quicksidebar.QuickSideBarTipsView
+            android:id="@+id/quickSideBarTipsView"
+            android:layout_width="@dimen/height_quicksidebartips"
+            android:layout_height="match_parent"
+            android:visibility="visible"
+            android:layout_toLeftOf="@+id/sb_index"
+            app:sidebarBackgroundColor="@color/colorPrimary"
+            app:sidebarTextColor="@android:color/white"
+            app:sidebarTextSize="@dimen/textSize_quicksidebartips" />
 
         <com.fei.sidebarview.SideBar
             android:id="@+id/sb_index"

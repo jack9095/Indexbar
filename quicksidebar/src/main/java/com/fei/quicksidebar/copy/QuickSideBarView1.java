@@ -1,21 +1,18 @@
-package com.fei.quicksidebar;
+package com.fei.quicksidebar.copy;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-import androidx.core.content.ContextCompat;
-
+import com.fei.quicksidebar.R;
 import com.fei.quicksidebar.listener.OnQuickSideBarTouchListener;
 
 import java.util.ArrayList;
@@ -26,14 +23,8 @@ import java.util.regex.Pattern;
 /**
  * 快速选择侧边栏
  * Letter 字母的意思
- *
- * 缩进两个 17个字母 + 拓展的
- * 缩进三个 13个字母 + 拓展的
- * 缩进四个 11个字母 + 拓展的
- * 缩进五个 9个字母 + 拓展的
- * 缩进六个 7个字母 + 拓展的
  */
-public class QuickSideBarView extends View {
+public class QuickSideBarView1 extends View {
 
     private OnQuickSideBarTouchListener listener;
     private List<String> mLetters;
@@ -48,28 +39,39 @@ public class QuickSideBarView extends View {
     private float mItemStartY; // 第一个字母起始位置的 Y 坐标
     private int mPadding; // 顶部和底部内边距
 
-    public QuickSideBarView(Context context) {
+    public QuickSideBarView1(Context context) {
         this(context, null);
     }
 
-    public QuickSideBarView(Context context, AttributeSet attrs) {
+    public QuickSideBarView1(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public QuickSideBarView(Context context, AttributeSet attrs, int defStyle) {
+    public QuickSideBarView1(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context, attrs);
     }
 
     private void init(Context context, AttributeSet attrs) {
         mLetters = Arrays.asList(context.getResources().getStringArray(R.array.quickSideBarLetters));
-        mTextColor = context.getResources().getColor(R.color.color_text);
-        mTextColorChoose = context.getResources().getColor(R.color.color_text_choose);
+
+        mTextColor = context.getResources().getColor(android.R.color.black);
+        mTextColorChoose = context.getResources().getColor(android.R.color.black);
         mTextSize = context.getResources().getDimensionPixelSize(R.dimen.textSize_quicksidebar);
         mTextSizeChoose = context.getResources().getDimensionPixelSize(R.dimen.textSize_quicksidebar_choose);
         mItemHeight = context.getResources().getDimension(R.dimen.height_quicksidebaritem);
         // 这个值至关重要
         mPadding = context.getResources().getDimensionPixelSize(R.dimen.height_quicksidebaritem);
+        if (attrs != null) {
+            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.QuickSideBarView);
+            mTextColor = a.getColor(R.styleable.QuickSideBarView_sidebarTextColor, mTextColor);
+            mTextColorChoose = a.getColor(R.styleable.QuickSideBarView_sidebarTextColorChoose, mTextColorChoose);
+            mTextSize = a.getDimension(R.styleable.QuickSideBarView_sidebarTextSize, mTextSize);
+            mTextSizeChoose = a.getDimension(R.styleable.QuickSideBarView_sidebarTextSizeChoose, mTextSizeChoose);
+            mItemHeight = a.getDimension(R.styleable.QuickSideBarView_sidebarItemHeight, mItemHeight);
+            a.recycle();
+        }
+
     }
 
     @Override
@@ -89,14 +91,6 @@ public class QuickSideBarView extends View {
         }
     }
 
-    /**
-     * 获取 IndexBar 的实际高度
-     * @param size
-     * @return
-     */
-    private int getIndexBarHeight(int size) {
-        return size*UDisplayUtil.dp2Px(getContext(),16) + UDisplayUtil.dp2Px(getContext(),16);
-    }
 
     /**
      * 设置字母表
@@ -107,46 +101,49 @@ public class QuickSideBarView extends View {
         if (letters == null) {
             return;
         }
-
+//        mLetters = letters;
+//        invalidate();
+        List<String> lists = new ArrayList<>();
         post(new Runnable() {
             @Override
             public void run() {
+                List<String> strings = filterLetter(letters);
                 int measuredHeight = getMeasuredHeight();
-                Log.e("fei.wang","measuredHeight -> " + measuredHeight);
-                List<String> strings = filterString(letters);
-                if (measuredHeight >= getIndexBarHeight(letters.size())) {
-                    mLetters = letters;
-                } else if (measuredHeight >= getIndexBarHeight(strings.size() + 17)) {
-                    mLetters = Arrays.asList(getContext().getResources().getStringArray(R.array.zoomTwo));
-                } else if (measuredHeight >= getIndexBarHeight(strings.size() + 13)) {
-                    mLetters = Arrays.asList(getContext().getResources().getStringArray(R.array.zoomThree));
-                } else if (measuredHeight >= getIndexBarHeight(strings.size() + 11)) {
-                    mLetters = Arrays.asList(getContext().getResources().getStringArray(R.array.zoomFour));
-                } else if (measuredHeight >= getIndexBarHeight(strings.size() + 9)) {
-                    mLetters = Arrays.asList(getContext().getResources().getStringArray(R.array.zoomFive));
-                } else if (measuredHeight >= getIndexBarHeight(strings.size() + 7)) {
-                    mLetters = Arrays.asList(getContext().getResources().getStringArray(R.array.zoomSix));
+                if (!letters.isEmpty()) {
+                    int itemHeight = (measuredHeight - mPadding) / strings.size();
+                    Log.e("fei.wang","measuredHeight -> " + measuredHeight);
+                    Log.e("fei.wang","mPadding -> " + mPadding);
+                    Log.e("fei.wang","itemHeight -> " + itemHeight);
+                    if (itemHeight < (int) mItemHeight) {
+                        for (int i = 0; i < strings.size(); i++) {
+                            if (i % 3 == 0 || i == strings.size() - 1) {
+                                Log.e("fei.wang","---- *************** -----------");
+                                lists.add(strings.get(i));
+                            }
+                        }
+                        lists.addAll(0,filterString(letters));
+                    } else {
+                        lists.addAll(letters);
+                    }
                 }
-
+                mLetters = lists;
                 mItemStartY = (measuredHeight - mLetters.size() * mItemHeight) / 2;
                 invalidate();
             }
         });
     }
 
-    // 字母背景画笔
-    private Paint mLettersPaint = new Paint();
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         for (int i = 0; i < mLetters.size(); i++) {
-
-
-
             mPaint.setColor(mTextColor);
+
             mPaint.setAntiAlias(true);
             mPaint.setTextSize(mTextSize);
             if (i == mChoose) {
                 mPaint.setColor(mTextColorChoose);
+                mPaint.setFakeBoldText(true); //true为粗体，false为非粗体
+                mPaint.setTypeface(Typeface.DEFAULT_BOLD); // 设置为粗体
                 mPaint.setTextSize(mTextSizeChoose);
             }
 
@@ -154,29 +151,11 @@ public class QuickSideBarView extends View {
             @SuppressLint("DrawAllocation") Rect rect = new Rect();
             // 由调用者返回在边界(分配)的最小矩形包含所有的字符,以隐含原点(0,0)
             mPaint.getTextBounds(mLetters.get(i), 0, mLetters.get(i).length(), rect);
+
             float xPos = (float) ((mWidth - rect.width()) * 0.5);
             float yPos = (float) (mItemHeight * i + ((mItemHeight - rect.height()) * 0.5) + mItemStartY);
 
-            if (i == mChoose) {
-
-                RectF rectF = new RectF();
-                rectF.left = xPos - mTextSize/2;
-                rectF.right = xPos + mTextSize/2;
-                rectF.top = mTextSize / 2;
-                rectF.bottom = mTextSize / 2;
-
-                // 绘制背景 start
-                mLettersPaint.reset();
-                mLettersPaint.setStyle(Paint.Style.FILL);
-                mLettersPaint.setColor(ContextCompat.getColor(getContext(),R.color.color_background_choose));
-                mLettersPaint.setAntiAlias(true);
-//                mPaint.setColor(ContextCompat.getColor(getContext(),R.color.color_background_choose));
-                canvas.drawCircle(xPos, yPos-mTextSize/3, (float) (mTextSize * 0.6), mLettersPaint);
-            }
-
             canvas.drawText(mLetters.get(i), xPos, yPos, mPaint);
-
-//            canvas.drawRoundRect(rectF, xPos, yPos, mPaint);
             mPaint.reset();
         }
 
@@ -189,7 +168,7 @@ public class QuickSideBarView extends View {
         final int oldChoose = mChoose;
         final int newChoose = (int) ((y - mItemStartY) / mItemHeight);
         if (action == MotionEvent.ACTION_UP) {
-//            mChoose = -1;
+            mChoose = -1;
             if (listener != null) {
                 listener.onLetterTouching(false);
             }

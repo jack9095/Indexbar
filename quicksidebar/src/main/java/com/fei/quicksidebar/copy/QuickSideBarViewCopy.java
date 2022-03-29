@@ -75,10 +75,11 @@ public class QuickSideBarViewCopy extends View {
             mPaint.setColor(mTextColor);
 
             mPaint.setAntiAlias(true);
+            mPaint.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
             mPaint.setTextSize(mTextSize);
             if (i == mChoose) {
                 mPaint.setColor(mTextColorChoose);
-                mPaint.setFakeBoldText(true);
+//                mPaint.setFakeBoldText(true);
                 mPaint.setTypeface(Typeface.DEFAULT_BOLD);
                 mPaint.setTextSize(mTextSizeChoose);
             }

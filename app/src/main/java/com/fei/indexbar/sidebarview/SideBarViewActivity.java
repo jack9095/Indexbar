@@ -65,16 +65,17 @@ public class SideBarViewActivity extends AppCompatActivity {
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
 
-        binding.rvArea.setLayoutManager(manager);
+        binding.recyclerView.setLayoutManager(manager);
 
-        binding.rvArea.setAdapter(adapter);
+        binding.recyclerView.setAdapter(adapter);
 
         binding.sbIndex.setOnTouchingLetterChangedListener(new SideBar.OnTouchingLetterChangedListener() {
             @Override
-            public void onTouchingLetterChanged(String s) {
+            public void onTouchingLetterChanged(String s, float y) {
                 if (adapter.getData().size() < 2) {
                     return;
                 }
+                binding.quickSideBarTipsView.setText(s,0,y);
                 if (s.equals(binding.sbIndex.getLetters()[0])) {
                     manager.scrollToPositionWithOffset(0, 0);
                 } else if (s.equals(binding.sbIndex.getLetters()[binding.sbIndex.getLetters().length - 1])) {
@@ -95,13 +96,13 @@ public class SideBarViewActivity extends AppCompatActivity {
             }
         });
 
-        binding.rvArea.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        binding.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (recyclerView.getLayoutManager() instanceof LinearLayoutManager){
                     int pos = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
-                    String str =  ((PhoneAreaAdapter)binding.rvArea.getAdapter()).getData().get(pos).getFisrtSpell();
+                    String str =  ((PhoneAreaAdapter)binding.recyclerView.getAdapter()).getData().get(pos).getFisrtSpell();
                     binding.sbIndex.setChooseStr(str);
                 }
             }

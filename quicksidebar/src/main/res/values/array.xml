@@ -28,4 +28,76 @@
         <item>Y</item>
         <item>Z</item>
     </array>
+
+    <array name="zoomTwo">
+        <item>A</item>
+        <item>·</item>
+        <item>D</item>
+        <item>·</item>
+        <item>G</item>
+        <item>·</item>
+        <item>J</item>
+        <item>·</item>
+        <item>M</item>
+        <item>·</item>
+        <item>P</item>
+        <item>·</item>
+        <item>S</item>
+        <item>·</item>
+        <item>V</item>
+        <item>·</item>
+        <item>Z</item>
+    </array>
+
+    <array name="zoomThree">
+        <item>A</item>
+        <item>·</item>
+        <item>E</item>
+        <item>·</item>
+        <item>I</item>
+        <item>·</item>
+        <item>M</item>
+        <item>·</item>
+        <item>Q</item>
+        <item>·</item>
+        <item>U</item>
+        <item>·</item>
+        <item>Z</item>
+    </array>
+
+    <array name="zoomFour">
+        <item>A</item>
+        <item>·</item>
+        <item>F</item>
+        <item>·</item>
+        <item>K</item>
+        <item>·</item>
+        <item>P</item>
+        <item>·</item>
+        <item>U</item>
+        <item>·</item>
+        <item>Z</item>
+    </array>
+
+    <array name="zoomFive">
+        <item>A</item>
+        <item>·</item>
+        <item>G</item>
+        <item>·</item>
+        <item>M</item>
+        <item>·</item>
+        <item>S</item>
+        <item>·</item>
+        <item>Z</item>
+    </array>
+
+    <array name="zoomSix">
+        <item>A</item>
+        <item>·</item>
+        <item>H</item>
+        <item>·</item>
+        <item>O</item>
+        <item>·</item>
+        <item>Z</item>
+    </array>
 </resources>

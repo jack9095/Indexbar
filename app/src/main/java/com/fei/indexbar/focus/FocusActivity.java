@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fei.focussidebar.FocusSideBar;
+//import com.fei.focussidebar.FocusSideBarCopy;
 import com.fei.focussidebar.SpellingUtils;
 import com.fei.indexbar.R;
 

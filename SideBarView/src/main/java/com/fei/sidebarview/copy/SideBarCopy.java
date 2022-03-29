@@ -1,4 +1,4 @@
-package com.fei.sidebarview;
+package com.fei.sidebarview.copy;
 
 
 import android.annotation.SuppressLint;
@@ -7,7 +7,6 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -18,7 +17,10 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-public class SideBar extends View{
+import com.fei.sidebarview.R;
+import com.fei.sidebarview.TextDialog;
+
+public class SideBarCopy extends View{
     // 触摸事件
     private OnTouchingLetterChangedListener onTouchingLetterChangedListener;
 
@@ -56,21 +58,19 @@ public class SideBar extends View{
     /** 选中弹窗字符背景高度 **/
     private int mDialogTextBackgroundHeight;
 
-    private float mItemHeight; // 每一个字母的高度
-
-    public SideBar(Context context, AttributeSet attrs, int defStyle) {
+    public SideBarCopy(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mContext=context;
         initData(attrs);
     }
 
-    public SideBar(Context context, AttributeSet attrs) {
+    public SideBarCopy(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext=context;
         initData(attrs);
     }
 
-    public SideBar(Context context) {
+    public SideBarCopy(Context context) {
         super(context);
         mContext=context;
         initData(null);
@@ -81,13 +81,12 @@ public class SideBar extends View{
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         int mHeight = getMeasuredHeight();
-        mItemStartY = (mHeight - mLetters.length * mItemHeight) / 2;
+//        mItemStartY = (mHeight - mLetters.length * mItemHeight) / 2;
     }
 
     /**
      * 重写这个方法
      */
-    @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         // 获取焦点改变背景颜色.
@@ -125,19 +124,16 @@ public class SideBar extends View{
     private void initData(@Nullable AttributeSet attrs) {
         // 加载默认资源
         final Resources res = getResources();
-        mItemHeight = getResources().getDimension(R.dimen.sidebar_default_height);
         final CharSequence[] defaultStringArray = res.getTextArray(R.array.side_bar_def_list);
         final int defaultSideTextColor = res.getColor(R.color.default_side_text_color);
         final int defaultSideTextSelectColor = res.getColor(R.color.default_side_text_select_color);
         final float defaultSideTextSize = res.getDimension(R.dimen.default_side_text_size);
         final Drawable defaultSideBackground = res.getDrawable(R.drawable.default_side_background);
-
         final int defaultDialogTextColor = res.getColor(R.color.sidebar_default_dialog_text_color);
         final float defaultDialogTextSize = res.getDimension(R.dimen.default_dialog_text_size);
         final Drawable defaultDialogTextBackground = res.getDrawable(R.drawable.default_dialog_text_background);
         final int defaultDialogTextBackgroundWidth = res.getDimensionPixelSize(R.dimen.default_dialog_text_background_width);
         final int defaultDialogTextBackgroundHeight = res.getDimensionPixelSize(R.dimen.default_dialog_text_background_height);
-
         // 读取配置信息
         TypedArray a = mContext.obtainStyledAttributes(attrs, R.styleable.SideBar);
 
@@ -200,10 +196,10 @@ public class SideBar extends View{
                     if (c >= 0 && c < mLetters.length) {
                         if (listener != null) {
                             //计算位置
-                            Rect rect = new Rect();
-                            mPaint.getTextBounds(mLetters[mChoose], 0, mLetters[mChoose].length(), rect);
-                            float yPos = mItemHeight * mChoose + (int) ((mItemHeight - rect.height()) * 0.5) + mItemStartY;
-                            listener.onTouchingLetterChanged((String) mLetters[c], yPos);
+//                            Rect rect = new Rect();
+//                            mPaint.getTextBounds(mLetters[mChoose], 0, mLetters[mChoose].length(), rect);
+//                            float yPos = mItemHeight * mChoose + (int) ((mItemHeight - rect.height()) * 0.5) + mItemStartY;
+                            listener.onTouchingLetterChanged((String) mLetters[c], 0);
                         }
                         if (mTextView != null) {
                             mTextView.setText(mLetters[c]);

@@ -72,7 +72,10 @@ public class QuickActivity extends AppCompatActivity implements OnQuickSideBarTo
         }
 
         //不自定义则默认26个字母
-        quickSideBarView.setLetters(customLetters);
+        String[] array = {"☆","A","B","C","D","E","F","G","H","I","J","K","L","M","N",
+                "O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+        quickSideBarView.setLetters(Arrays.asList(array));
+//        quickSideBarView.setLetters(customLetters);
         adapter.addAll(cities);
         recyclerView.setAdapter(adapter);
 
@@ -96,7 +99,7 @@ public class QuickActivity extends AppCompatActivity implements OnQuickSideBarTo
     @Override
     public void onLetterTouching(boolean touching) {
         //可以自己加入动画效果渐显渐隐
-        quickSideBarTipsView.setVisibility(touching? View.VISIBLE:View.INVISIBLE);
+//        quickSideBarTipsView.setVisibility(touching? View.VISIBLE:View.INVISIBLE);
     }
 
     private class CityListWithHeadersAdapter extends CityListAdapter<RecyclerView.ViewHolder>
@@ -132,7 +135,8 @@ public class QuickActivity extends AppCompatActivity implements OnQuickSideBarTo
         public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
             TextView textView = (TextView) holder.itemView;
             textView.setText(String.valueOf(getItem(position).getFirstLetter()));
-            holder.itemView.setBackgroundColor(getRandomColor());
+            holder.itemView.setBackgroundColor(Color.parseColor("#ffffff"));
+//            holder.itemView.setBackgroundColor(getRandomColor());
         }
 
         private int getRandomColor() {

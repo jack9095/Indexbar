@@ -18,7 +18,7 @@ import android.view.View;
  * @since 2019/9/1
  * description: 焦点侧边栏
  */
-public class FocusSideBar extends View {
+public class FocusSideBarCopy extends View {
     private final static int DEFAULT_TEXT_SIZE = 14; // sp
     private final static int DEFAULT_CENTER_TIPS_SIZE = 28; // dp
 
@@ -117,15 +117,15 @@ public class FocusSideBar extends View {
     private DisplayMetrics mDisplayMetrics;
 
 
-    public FocusSideBar(Context context) {
+    public FocusSideBarCopy(Context context) {
         this(context, null);
     }
 
-    public FocusSideBar(Context context, AttributeSet attrs) {
+    public FocusSideBarCopy(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public FocusSideBar(Context context, AttributeSet attrs, int defStyleAttr) {
+    public FocusSideBarCopy(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mDisplayMetrics = context.getResources().getDisplayMetrics();
 
@@ -234,19 +234,7 @@ public class FocusSideBar extends View {
 
             if (i == mCurrentIndex) {
                 mPaint.setColor(mFocusBgColor);
-//                canvas.drawCircle(baseLineX, baseLineY - mTextSize / 3, (float) (mTextSize * 0.6), mPaint);
-
-                //画圆角矩形背景
-                RectF oval = new RectF(
-                        baseLineX - mTextSize/2 - dp2px(2),
-                        baseLineY + mPaint.ascent() - 2,
-                        baseLineX + mTextSize/2 + dp2px(2),
-                        baseLineY + mPaint.descent() + 2);
-                //设置文字背景矩形，x为span其实左上角相对整个TextView的x值，y为span左上角相对整个View的y值。
-                // paint.ascent()获得文字上边缘，paint.descent()获得文字下边缘
-                canvas.drawRoundRect(oval, dp2px(4), dp2px(4), mPaint);//绘制圆角矩形，第二个参数是x半径，第三个参数是y半径
-
-
+                canvas.drawCircle(baseLineX, baseLineY - mTextSize / 3, (float) (mTextSize * 0.6), mPaint);
                 mPaint.setColor(Color.WHITE);
             } else {
                 mPaint.setColor(Color.GRAY);
@@ -255,13 +243,13 @@ public class FocusSideBar extends View {
         }
 
         if (mIsMoved && mIsShowCenterTips) {
-//            mPaint.setColor(mCenterTipTextColor);
-//            float x = getWidth() / 2;
-//            float y = getHeight() / 2;
-//            mPaint.setTextSize(mCenterTipsSize);
-//            canvas.drawText(mIndexItems[mCurrentIndex], x, y, mPaint);
-//            mPaint.setColor(mCenterTipBgColor);
-//            canvas.drawCircle(x, (float) (y - mCenterTipsSize * 0.3), mCenterTipsSize, mPaint);
+            mPaint.setColor(mCenterTipTextColor);
+            float x = getWidth() / 2;
+            float y = getHeight() / 2;
+            mPaint.setTextSize(mCenterTipsSize);
+            canvas.drawText(mIndexItems[mCurrentIndex], x, y, mPaint);
+            mPaint.setColor(mCenterTipBgColor);
+            canvas.drawCircle(x, (float) (y - mCenterTipsSize * 0.3), mCenterTipsSize, mPaint);
         }
 
         // reset paint
@@ -346,8 +334,7 @@ public class FocusSideBar extends View {
      * @param indexItems default is {@link #DEFAULT_INDEX_ITEMS}.
      */
     public void setIndexItems(String[] indexItems) {
-//        mIndexItems = indexItems;
-        mIndexItems = DEFAULT_INDEX_ITEMS;
+        mIndexItems = indexItems;
         requestLayout();
     }
 
@@ -367,9 +354,8 @@ public class FocusSideBar extends View {
     }
 
     public void setCurrentIndex(int currentIndex) {
-        // TODO 2022/3.29 这两行代码放开绘制选中背景会错乱
-//        this.mCurrentIndex = currentIndex;
-//        requestLayout();
+        this.mCurrentIndex = currentIndex;
+        requestLayout();
     }
 
     public void setLazyRespond(boolean lazyRespond) {
