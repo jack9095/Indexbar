@@ -16,6 +16,7 @@
         android:id="@+id/quickSideBarTipsView"
         android:layout_width="@dimen/height_quicksidebartips"
         android:layout_height="match_parent"
+        android:visibility="gone"
         android:layout_toLeftOf="@+id/quickSideBarView"
         app:sidebarBackgroundColor="@color/colorPrimary"
         app:sidebarTextColor="@android:color/white"
@@ -29,10 +30,11 @@
         android:layout_width="20dp"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="45dp"
-        app:sidebarItemHeight="@dimen/height_quicksidebaritem"
         app:sidebarTextColor="@android:color/black"
         app:sidebarTextColorChoose="@color/colorPrimary"
         app:sidebarTextSize="@dimen/textSize_quicksidebar"
         app:sidebarTextSizeChoose="@dimen/textSize_quicksidebar_choose" />
+
+<!--    android:layout_marginTop="45dp"-->
+<!--    app:sidebarItemHeight="@dimen/height_quicksidebaritem"-->
 </RelativeLayout>

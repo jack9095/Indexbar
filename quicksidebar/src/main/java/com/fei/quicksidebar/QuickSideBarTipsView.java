@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.fei.quicksidebar.tipsview.QuickSideBarTipsItemView;
 
 /**
- * Created by Sai on 16/3/26.
+ * 安卓字母导航view 左边显示对应的悬浮窗口
  */
 public class QuickSideBarTipsView extends RelativeLayout {
     private QuickSideBarTipsItemView mTipsView;
@@ -39,12 +39,17 @@ public class QuickSideBarTipsView extends RelativeLayout {
 //        addView(mTipsView,layoutParams);
     }
 
-
+    /**
+     * 关键代码，可以让悬浮窗随着滑动的字母移动
+     * @param text
+     * @param poistion
+     * @param y
+     */
     public void setText(String text,int poistion, float y){
         mTipsView.setText(text);
         textview.setText(text);
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) textview.getLayoutParams();
-        layoutParams.topMargin = (int)(y - getWidth()/2.8 + 200);
+        layoutParams.topMargin = (int)(y - getWidth()/2.8);
         textview.setLayoutParams(layoutParams);
     }
 

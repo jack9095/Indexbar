@@ -1,4 +1,4 @@
-package com.fei.wavesidebar;
+package com.fei.wavesidebar.copy;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -14,6 +14,8 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.fei.wavesidebar.R;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,7 +24,7 @@ import java.util.List;
  * author: imilk
  * https://github.com/Solartisan/WaveSideBar.git
  */
-public class WaveSideBarView extends View {
+public class WaveSideBarViewCopy extends View {
 
     private static final String TAG = "WaveSlideBarView";
 
@@ -85,15 +87,15 @@ public class WaveSideBarView extends View {
     // 圆形中心点X
     private float mBallCentreX;
 
-    public WaveSideBarView(Context context) {
+    public WaveSideBarViewCopy(Context context) {
         this(context, null);
     }
 
-    public WaveSideBarView(Context context, AttributeSet attrs) {
+    public WaveSideBarViewCopy(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public WaveSideBarView(Context context, AttributeSet attrs, int defStyle) {
+    public WaveSideBarViewCopy(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context, attrs);
     }
@@ -132,6 +134,51 @@ public class WaveSideBarView extends View {
     }
 
     @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        final float y = event.getY();
+        final float x = event.getX();
+
+        oldChoose = mChoose;
+        newChoose = (int) (y / mHeight * mLetters.size());
+
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+
+//                if (x < mWidth - 2 * mRadius) {
+                if (x < mWidth - mRadius) {//不做选字母处理，防止误触，设为触摸控件实体右半部分有效
+                    Log.w("tag","touch x:"+x);
+                    return false;
+                }
+                mCenterY = (int) y;
+                startAnimator(mRatio, 1.0f);
+
+                break;
+            case MotionEvent.ACTION_MOVE:
+
+                mCenterY = (int) y;
+                if (oldChoose != newChoose) {
+                    if (newChoose >= 0 && newChoose < mLetters.size()) {
+                        mChoose = newChoose;
+                        if (listener != null) {
+                            listener.onLetterChange(mLetters.get(newChoose));
+                        }
+                    }
+                }
+                invalidate();
+                break;
+            case MotionEvent.ACTION_CANCEL:
+            case MotionEvent.ACTION_UP:
+
+                startAnimator(mRatio, 0f);
+                mChoose = -1;
+                break;
+            default:
+                break;
+        }
+        return true;
+    }
+
+    @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         mHeight = MeasureSpec.getSize(heightMeasureSpec);
@@ -148,10 +195,10 @@ public class WaveSideBarView extends View {
         drawLetters(canvas);
 
         //绘制波浪
-//        drawWavePath(canvas);
+        drawWavePath(canvas);
 
         //绘制圆
-//        drawBallPath(canvas);
+        drawBallPath(canvas);
 
         //绘制选中的字体
         drawChooseText(canvas);
@@ -166,7 +213,6 @@ public class WaveSideBarView extends View {
         rectF.top = mTextSize / 2;
         rectF.bottom = mHeight - mTextSize / 2;
 
-        //        绘制背景 start
         mLettersPaint.reset();
         mLettersPaint.setStyle(Paint.Style.FILL);
         mLettersPaint.setColor(Color.parseColor("#F9F9F9"));
@@ -178,9 +224,7 @@ public class WaveSideBarView extends View {
         mLettersPaint.setColor(mTextColor);
         mLettersPaint.setAntiAlias(true);
         canvas.drawRoundRect(rectF, mTextSize, mTextSize, mLettersPaint);
-        //        绘制背景 end
 
-        // 绘制显示的字母
         for (int i = 0; i < mLetters.size(); i++) {
             mLettersPaint.reset();
             mLettersPaint.setColor(mTextColor);
@@ -270,50 +314,6 @@ public class WaveSideBarView extends View {
 
     }
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-        final float y = event.getY();
-        final float x = event.getX();
-
-        oldChoose = mChoose;
-        newChoose = (int) (y / mHeight * mLetters.size());
-
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-
-//                if (x < mWidth - 2 * mRadius) {
-                if (x < mWidth - mRadius) {//不做选字母处理，防止误触，设为触摸控件实体右半部分有效
-                    Log.w("tag","touch x:"+x);
-                    return false;
-                }
-                mCenterY = (int) y;
-                startAnimator(mRatio, 1.0f);
-
-                break;
-            case MotionEvent.ACTION_MOVE:
-
-                mCenterY = (int) y;
-                if (oldChoose != newChoose) {
-                    if (newChoose >= 0 && newChoose < mLetters.size()) {
-                        mChoose = newChoose;
-                        if (listener != null) {
-                            listener.onLetterChange(mLetters.get(newChoose));
-                        }
-                    }
-                }
-                invalidate();
-                break;
-            case MotionEvent.ACTION_CANCEL:
-            case MotionEvent.ACTION_UP:
-
-                startAnimator(mRatio, 0f);
-                mChoose = -1;
-                break;
-            default:
-                break;
-        }
-        return true;
-    }
 
     private void startAnimator(float... value) {
         if (mRatioAnimator == null) {
