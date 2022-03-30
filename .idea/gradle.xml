@@ -16,6 +16,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/focussidebar" />
             <option value="$PROJECT_DIR$/quicksidebar" />
+            <option value="$PROJECT_DIR$/recyclerview" />
             <option value="$PROJECT_DIR$/waveSideBar" />
           </set>
         </option>

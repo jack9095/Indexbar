@@ -367,7 +367,7 @@ public class FocusSideBar extends View {
     }
 
     public void setCurrentIndex(int currentIndex) {
-        // TODO 2022/3.29 这两行代码放开绘制选中背景会错乱
+        // TODO 2022/3.29 这两行代码放开绘制选中背景会错乱,但是滑动的时候要和列表联动起来就必须得使用下面的代码
 //        this.mCurrentIndex = currentIndex;
 //        requestLayout();
     }

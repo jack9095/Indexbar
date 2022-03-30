@@ -20,6 +20,13 @@
         <entry key="app/src/main/res-wave/layout/item_pinned_header.xml" value="0.30104166666666665" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.28541666666666665" />
         <entry key="quicksidebar/src/main/res/layout/view_floating_window.xml" value="0.30104166666666665" />
+        <entry key="recyclerview/src/main/res/drawable/background_shape.xml" value="0.1695" />
+        <entry key="recyclerview/src/main/res/layout/activity_main.xml" value="0.28541666666666665" />
+        <entry key="recyclerview/src/main/res/layout/activity_main_copy.xml" value="0.30104166666666665" />
+        <entry key="recyclerview/src/main/res/layout/index_layout.xml" value="0.30104166666666665" />
+        <entry key="recyclerview/src/main/res/layout/item_focus_side_bar.xml" value="0.30104166666666665" />
+        <entry key="recyclerview/src/main/res/layout/u_index_item_layout.xml" value="0.30104166666666665" />
+        <entry key="recyclerview/src/main/res/layout/view_floating_window.xml" value="0.30104166666666665" />
       </map>
     </option>
   </component>
