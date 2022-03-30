@@ -33,15 +33,15 @@ public class MyRecyclerView extends RecyclerView {
         this(context, attrs, 0);
     }
 
-    public void adapter(IndexBarAdapter indexBarAdapter) {
-        mIndexBarAdapter = indexBarAdapter;
-        setAdapter(indexBarAdapter);
-    }
-
     public MyRecyclerView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mItemHeight = dp2px(16);
         ((DefaultItemAnimator) getItemAnimator()).setSupportsChangeAnimations(false);
+    }
+
+    public void adapter(IndexBarAdapter indexBarAdapter) {
+        mIndexBarAdapter = indexBarAdapter;
+        setAdapter(indexBarAdapter);
     }
 
     public void setData(List<String> lists) {
@@ -66,17 +66,12 @@ public class MyRecyclerView extends RecyclerView {
         final int oldChoose = mChoose;
         final int newChoose = (int) ((y - mItemStartY) / mItemHeight);
         if (action == MotionEvent.ACTION_UP) {
-//            mChoose = -1;
             if (mOnTouchListener != null) {
                 mOnTouchListener.onTouching(false);
             }
-            if (mChoose >= 0 && mChoose < mIndexBarAdapter.getData().size()) {
-                Log.e("fei.wang", "ACTION_UP mChoose -> " + mIndexBarAdapter.getData().get(mChoose).str);
-            }
-
         } else {
             if (oldChoose != newChoose) {
-                if (newChoose >= 0 && newChoose < mIndexBarAdapter.getItemCount()) {
+                if (mIndexBarAdapter != null && newChoose >= 0 && newChoose < mIndexBarAdapter.getItemCount()) {
                     mChoose = newChoose;
                     if (mOnTouchListener != null) {
                         //计算位置
@@ -85,7 +80,7 @@ public class MyRecyclerView extends RecyclerView {
                         mOnTouchListener.onChanged(mIndexBarAdapter.getData().get(newChoose).str, mChoose, yPos);
                     }
                 }
-                if (mChoose >= 0 && mChoose < mIndexBarAdapter.getData().size()) {
+                if (mIndexBarAdapter != null && mIndexBarAdapter.getData() != null && mChoose >= 0 && mChoose < mIndexBarAdapter.getData().size()) {
                     List<IndexBean> data = mIndexBarAdapter.getData();
                     if (!data.isEmpty()) {
                         for (int i = 0; i < data.size(); i++) {
@@ -93,7 +88,6 @@ public class MyRecyclerView extends RecyclerView {
                         }
                     }
                     mIndexBarAdapter.notifyDataSetChanged();
-//                    mIndexBarAdapter.notifyItemChanged(mChoose);
                     Log.e("fei.wang", "mChoose -> " + mIndexBarAdapter.getData().get(mChoose).str);
                 }
             }

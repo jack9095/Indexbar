@@ -14,21 +14,11 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <!-- 这个是浮动的提示 ，配合字母栏实现放大浮动提示滑动到哪个字母-->
-    <com.fei.indexbar.IndexBarTipsView
-        android:id="@+id/indexBarTipsView"
-        android:layout_alignTop="@+id/index_bar"
-        android:layout_width="45dp"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_toStartOf="@+id/index_bar"
-        />
-
     <com.fei.indexbar.IndexBar
         android:id="@+id/index_bar"
         android:layout_centerVertical="true"
-        android:layout_width="30dp"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
-        android:background="@color/white" />
+        android:background="@color/purple_200" />
 </RelativeLayout>

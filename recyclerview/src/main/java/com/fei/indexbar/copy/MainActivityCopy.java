@@ -17,7 +17,7 @@ import com.fei.indexbar.adapter.IndexBarFocusAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivityCopy extends AppCompatActivity implements MyRecyclerView.OnTouchListener {
+public class MainActivityCopy extends AppCompatActivity implements IndexBar.OnTouchListener {
     private List<String> focusList;
 
     @Override

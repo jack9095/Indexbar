@@ -1,12 +1,17 @@
 package com.fei.indexbar.util;
 
+import com.fei.indexbar.model.AreaPhoneBean;
+
+import org.json.JSONArray;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class DataUtil {
 
-    public static List<String> getData(){
-        List<String>  focusList = new ArrayList<>();
+    public static List<String> getData() {
+        List<String> focusList = new ArrayList<>();
         focusList.add("北京");
         focusList.add("天津");
         focusList.add("河北");
@@ -126,6 +131,29 @@ public class DataUtil {
         focusList.add("*873");
         focusList.add("$&&^");
         focusList = SpellingUtils.stringSort(focusList);
+        return focusList;
+    }
+    public static List<String> getDataa(){
+        List<String> focusList = new ArrayList<>();
+//        ArrayList<AreaPhoneBean> mBeans = new ArrayList<>();
+//        JSONArray array = ReadAssetsJsonUtil.getJSONArray("area_phone_code.json", this);
+//        if (null == array) array = new JSONArray();
+//        for (int i = 0; i < array.length(); i++) {
+//            AreaPhoneBean bean = new AreaPhoneBean();
+//            bean.name = array.optJSONObject(i).optString("zh");
+//            bean.fisrtSpell = PinyinUtils.getFirstSpell(bean.name.substring(0,1));
+//            bean.name_py = PinyinUtils.getPinYin(bean.name);
+//            bean.code = array.optJSONObject(i).optString("code");
+//            bean.locale = array.optJSONObject(i).optString("locale");
+//            bean.en_name = array.optJSONObject(i).optString("en");
+//            mBeans.add(bean);
+//        }
+//        // 根据拼音为数组进行排序
+//        Collections.sort(mBeans, new AreaPhoneBean.ComparatorPY());
+//
+//        for (AreaPhoneBean mBean : mBeans) {
+//            focusList.add(mBean.fisrtSpell);
+//        }
 
         return focusList;
     }

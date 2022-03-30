@@ -1,7 +1,8 @@
 package com.fei.indexbar;
 
 import android.os.Bundle;
-import android.view.View;
+import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,58 +13,40 @@ import com.fei.indexbar.util.DataUtil;
 import com.fei.indexbar.util.SpellingUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements MyRecyclerView.OnTouchListener {
+public class MainActivity extends AppCompatActivity implements IndexBar.OnTouchListener {
 
     private List<String> focusList;
-    HashMap<String,Integer> letters = new HashMap<>();
-    private IndexBarTipsView indexBarTipsView;
-    private RecyclerView recyclerView;
+    private LinearLayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         focusList = DataUtil.getData();
-        int position = 0;
-        for(String letter: focusList){
-            //如果没有这个key则加入并把位置也加入
-            if(!letters.containsKey(letter)){
-                letters.put(letter,position);
-            }
-            position++;
-        }
         initViews();
     }
 
     @Override
     public void onChanged(String letter, int position, float y) {
-        indexBarTipsView.setText(letter, position, y);
-        //有此key则获取位置并滚动到该位置
-        if(letters.containsKey(letter)) {
-            Integer index = letters.get(letter);
-            recyclerView.scrollToPosition(index);
+        Log.e("fei.wang", "触摸滑动事件");
+        for (int i = 0; i < focusList.size(); i++) {
+            String key = SpellingUtils.getFirstLetter(focusList.get(i).substring(0, 1));
+            if (("#".equals(letter) && key.startsWith("#")) || TextUtils.equals(key, letter)) {
+                layoutManager.scrollToPositionWithOffset(i, 0);
+                return;
+            }
         }
     }
 
     @Override
     public void onTouching(boolean touching) {
-        //可以自己加入动画效果渐显渐隐
-        indexBarTipsView.setVisibility(touching? View.VISIBLE:View.INVISIBLE);
     }
 
     private void initViews() {
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        indexBarTipsView = findViewById(R.id.indexBarTipsView);
-        recyclerView = findViewById(R.id.recyclerView);
-        final IndexBar focusSideBar = findViewById(R.id.index_bar);
-        focusSideBar.setOnTouchListener(this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(new IndexBarFocusAdapter(focusList, R.layout.item_focus_side_bar));
 
-        final List<String> enNameList = new ArrayList<>();
+        final List<String> enNameList = new ArrayList<>(); // 给右侧字母导航栏设置的数据
         for (String value : focusList) {
             String key = SpellingUtils.getFirstLetter(value.substring(0, 1));
             key = key.startsWith("#") ? "#" : key;
@@ -72,12 +55,19 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerView.On
             }
         }
 
+        layoutManager = new LinearLayoutManager(this);
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        final IndexBar mIndexBar = findViewById(R.id.index_bar);
+        mIndexBar.setOnTouchListener(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(new IndexBarFocusAdapter(focusList, R.layout.item_focus_side_bar));
+        // TODO recyclerView 滚动的时候 联动右侧滚动
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 final int position = layoutManager.findFirstCompletelyVisibleItemPosition();
                 String key = SpellingUtils.getFirstLetter(focusList.get(position).substring(0, 1));
-//                focusSideBar.setCurrentIndex(enNameList.indexOf(key));
+                mIndexBar.setCurrentIndex(enNameList.indexOf(key));
             }
         });
     }
