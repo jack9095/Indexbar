@@ -16,7 +16,7 @@
 
     <!-- 这个是浮动的提示 ，配合字母栏实现放大浮动提示滑动到哪个字母-->
     <!--下面的自定义属性都是默认的,可以不写-->
-    <com.fei.indexbar.IndexBarTipsView
+    <com.fei.indexbar.copy.IndexBarTipsViewCopy
         android:id="@+id/indexBarTipsView"
         android:layout_alignTop="@+id/index_bar"
         android:layout_width="45dp"
@@ -25,7 +25,7 @@
         android:layout_toLeftOf="@+id/index_bar"
         />
 
-    <com.fei.indexbar.IndexBar
+    <com.fei.indexbar.copy.IndexBarCopy
         android:id="@+id/index_bar"
         android:layout_centerVertical="true"
         android:layout_width="30dp"

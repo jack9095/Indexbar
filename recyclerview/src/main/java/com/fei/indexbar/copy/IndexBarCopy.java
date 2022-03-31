@@ -21,7 +21,7 @@ import java.util.List;
 
 public class IndexBarCopy extends FrameLayout {
 
-    private MyRecyclerView mRecyclerView;
+    private MyRecyclerViewCopy mRecyclerView;
     private IndexBarAdapter mIndexBarAdapter;
     private List<IndexBean> mLetters = new ArrayList<>();
 
@@ -43,7 +43,7 @@ public class IndexBarCopy extends FrameLayout {
     }
 
     private void initView() {
-        LayoutInflater.from(getContext()).inflate(R.layout.index_layout, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.u_index_bar_layout_copy, this, true);
         mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mIndexBarAdapter = new IndexBarAdapter();
@@ -95,7 +95,7 @@ public class IndexBarCopy extends FrameLayout {
         this.mOnItemClickListener = listener;
     }
 
-    public void setOnTouchListener(MyRecyclerView.OnTouchListener listener) {
+    public void setOnTouchListener(MyRecyclerViewCopy.OnTouchListener listener) {
         mRecyclerView.setOnTouchListener(listener);
     }
 }

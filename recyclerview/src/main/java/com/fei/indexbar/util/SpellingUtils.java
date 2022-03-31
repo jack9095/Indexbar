@@ -1,5 +1,7 @@
 package com.fei.indexbar.util;
 
+import android.util.Log;
+
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -80,7 +82,7 @@ public class SpellingUtils {
      * 取得给定汉字的首字母,即声母
      *
      * @param chinese 给定的汉字
-     * @return 给定汉字的声母
+     * @return 给定汉字的声母 大写
      */
     public static String getFirstLetter(String chinese) {
         if (chinese == null || chinese.trim().length() == 0) {

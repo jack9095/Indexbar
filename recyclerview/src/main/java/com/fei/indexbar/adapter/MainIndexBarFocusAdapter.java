@@ -9,12 +9,12 @@ import com.fei.indexbar.R;
 import java.util.List;
 
 
-public class IndexBarFocusAdapter extends RecyclerView.Adapter<IndexBarFocusAdapter.ViewHolder> {
+public class MainIndexBarFocusAdapter extends RecyclerView.Adapter<MainIndexBarFocusAdapter.ViewHolder> {
 
     private List<String> list;
     private int layoutId;
 
-    public IndexBarFocusAdapter(List<String> list, int layoutId) {
+    public MainIndexBarFocusAdapter(List<String> list, int layoutId) {
         this.list = list;
         this.layoutId = layoutId;
     }

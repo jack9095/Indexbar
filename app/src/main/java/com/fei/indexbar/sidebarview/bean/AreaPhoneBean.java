@@ -61,7 +61,7 @@ public class AreaPhoneBean implements Serializable {
     }
 
     /**
-     * 按拼音进行排序
+     * 按拼音进行排序 a,b,c,d,e...z
      */
     public static class ComparatorPY implements Comparator<AreaPhoneBean> {
         @Override

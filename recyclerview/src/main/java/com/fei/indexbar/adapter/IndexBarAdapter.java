@@ -42,14 +42,14 @@ public class IndexBarAdapter extends RecyclerView.Adapter<IndexBarAdapter.IndexB
     @NonNull
     @Override
     public IndexBarAdapter.IndexBarHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new IndexBarAdapter.IndexBarHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.u_index_item_layout, parent, false));
+        return new IndexBarAdapter.IndexBarHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.u_index_bar_item_layout, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull IndexBarAdapter.IndexBarHolder holder, int position) {
         if (lists != null && lists.size() > position && position >= 0) {
-            String str = lists.get(position).str;
-            if (lists.get(position).isSelect) {
+            String str = lists.get(position).getLetter();
+            if (lists.get(position).isSelect()) {
                 holder.mLinearLayout.setBackgroundResource(R.drawable.background_shape);
             } else {
                 holder.mLinearLayout.setBackground(null);

@@ -29,7 +29,7 @@ public class IndexBarTipsViewCopy extends RelativeLayout {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        LayoutInflater.from(getContext()).inflate(R.layout.view_floating_window, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.u_floating_window, this, true);
         textview = findViewById(R.id.textview);
 //        mTipsView = new QuickSideBarTipsItemView(context,attrs);
 //        LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);

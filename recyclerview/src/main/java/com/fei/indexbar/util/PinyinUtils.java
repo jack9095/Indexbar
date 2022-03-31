@@ -1,12 +1,16 @@
 package com.fei.indexbar.util;
 
 
+import com.fei.indexbar.model.IndexBean;
+
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
 import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
+
+import java.util.Comparator;
 
 /**
  * 使用的 pinyin4j-2.5.0.jar
@@ -67,5 +71,17 @@ public class PinyinUtils {
             }
         }
         return pybf.toString().replaceAll("\\W", "").trim();
+    }
+
+    /**
+     * 按拼音进行排序 a,b,c,d,e...z
+     */
+    public static class ComparatorPY implements Comparator<IndexBean> {
+        @Override
+        public int compare(IndexBean lhs, IndexBean rhs) {
+            String str1 = lhs.getLetter();
+            String str2 = rhs.getLetter();
+            return str1.compareToIgnoreCase(str2);
+        }
     }
 }

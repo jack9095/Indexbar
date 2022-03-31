@@ -52,10 +52,10 @@ public class MyRecyclerView extends RecyclerView {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         int mHeight = getMeasuredHeight();
-        Log.e("fei.wang", "onMeasure  -》 measuredHeight -> " + mHeight);
+//        Log.e("fei.wang", "onMeasure  -》 measuredHeight -> " + mHeight);
         if (mLetters != null && mLetters.size() > 0) {
             mItemStartY = (mHeight - mLetters.size() * mItemHeight) / 2;
-            Log.e("fei.wang","onMeasure  -》 mItemStartY -> " + mItemStartY);
+//            Log.e("fei.wang","onMeasure  -》 mItemStartY -> " + mItemStartY);
         }
     }
 
@@ -77,18 +77,18 @@ public class MyRecyclerView extends RecyclerView {
                         //计算位置
                         Rect rect = new Rect();
                         float yPos = mItemHeight * mChoose + (int) ((mItemHeight - rect.height()) * 0.5) + mItemStartY;
-                        mOnTouchListener.onChanged(mIndexBarAdapter.getData().get(newChoose).str, mChoose, yPos);
+                        mOnTouchListener.onChanged(mIndexBarAdapter.getData().get(newChoose), mChoose, yPos);
                     }
                 }
                 if (mIndexBarAdapter != null && mIndexBarAdapter.getData() != null && mChoose >= 0 && mChoose < mIndexBarAdapter.getData().size()) {
                     List<IndexBean> data = mIndexBarAdapter.getData();
                     if (!data.isEmpty()) {
                         for (int i = 0; i < data.size(); i++) {
-                            data.get(i).isSelect = i == mChoose;
+                            data.get(i).setSelect(i == mChoose);
                         }
                     }
                     mIndexBarAdapter.notifyDataSetChanged();
-                    Log.e("fei.wang", "mChoose -> " + mIndexBarAdapter.getData().get(mChoose).str);
+//                    Log.e("fei.wang", "mChoose -> " + mIndexBarAdapter.getData().get(mChoose).getLetter());
                 }
             }
             //如果是cancel也要调用onLetterUpListener 通知
@@ -118,7 +118,7 @@ public class MyRecyclerView extends RecyclerView {
     }
 
     public interface OnTouchListener {
-        void onChanged(String letter, int position, float y);
+        void onChanged(IndexBean bean, int position, float y);
 
         void onTouching(boolean touching);
     }

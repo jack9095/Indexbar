@@ -71,7 +71,7 @@ public class MyRecyclerViewCopy extends RecyclerView {
                 mOnTouchListener.onTouching(false);
             }
             if (mChoose >= 0 && mChoose < mIndexBarAdapter.getData().size()) {
-                Log.e("fei.wang", "ACTION_UP mChoose -> " + mIndexBarAdapter.getData().get(mChoose).str);
+                Log.e("fei.wang", "ACTION_UP mChoose -> " + mIndexBarAdapter.getData().get(mChoose).getLetter());
             }
 
         } else {
@@ -82,19 +82,19 @@ public class MyRecyclerViewCopy extends RecyclerView {
                         //计算位置
                         Rect rect = new Rect();
                         float yPos = mItemHeight * mChoose + (int) ((mItemHeight - rect.height()) * 0.5) + mItemStartY;
-                        mOnTouchListener.onChanged(mIndexBarAdapter.getData().get(newChoose).str, mChoose, yPos);
+                        mOnTouchListener.onChanged(mIndexBarAdapter.getData().get(newChoose).getLetter(), mChoose, yPos);
                     }
                 }
                 if (mChoose >= 0 && mChoose < mIndexBarAdapter.getData().size()) {
                     List<IndexBean> data = mIndexBarAdapter.getData();
                     if (!data.isEmpty()) {
                         for (int i = 0; i < data.size(); i++) {
-                            data.get(i).isSelect = i == mChoose;
+                            data.get(i).setSelect(i == mChoose);
                         }
                     }
                     mIndexBarAdapter.notifyDataSetChanged();
 //                    mIndexBarAdapter.notifyItemChanged(mChoose);
-                    Log.e("fei.wang", "mChoose -> " + mIndexBarAdapter.getData().get(mChoose).str);
+                    Log.e("fei.wang", "mChoose -> " + mIndexBarAdapter.getData().get(mChoose).getLetter());
                 }
             }
             //如果是cancel也要调用onLetterUpListener 通知

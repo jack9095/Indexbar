@@ -11,13 +11,14 @@ import com.fei.indexbar.IndexBar;
 import com.fei.indexbar.MyRecyclerView;
 import com.fei.indexbar.OnRecyclerItemClickListener;
 import com.fei.indexbar.R;
+import com.fei.indexbar.model.IndexBean;
 import com.fei.indexbar.util.SpellingUtils;
-import com.fei.indexbar.adapter.IndexBarFocusAdapter;
+import com.fei.indexbar.adapter.MainIndexBarFocusAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivityCopy extends AppCompatActivity implements IndexBar.OnTouchListener {
+public class MainActivityCopy extends AppCompatActivity implements MyRecyclerViewCopy.OnTouchListener {
     private List<String> focusList;
 
     @Override
@@ -41,10 +42,10 @@ public class MainActivityCopy extends AppCompatActivity implements IndexBar.OnTo
     private void initViews() {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        final IndexBar focusSideBar = findViewById(R.id.index_bar);
+        final IndexBarCopy focusSideBar = findViewById(R.id.index_bar);
         focusSideBar.setOnTouchListener(this);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(new IndexBarFocusAdapter(focusList, R.layout.item_focus_side_bar));
+        recyclerView.setAdapter(new MainIndexBarFocusAdapter(focusList, R.layout.main_list_item_adapter));
 
         recyclerView.addOnItemTouchListener(new OnRecyclerItemClickListener(recyclerView) {
 
