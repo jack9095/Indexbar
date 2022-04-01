@@ -31,7 +31,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * 目前功能性问题，字母最上方的热区没实现，还有就是 合并缩略功能的实现，和 ListView 的结合使用
+ * 目前功能性问题，滑动的过程中把合并的效果也实现出来，和 ListView 的结合使用
  */
 public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchListener, IndexBarTipsView.OnTouchListener {
     private final static int INDEX_BAR_MIN_HEIGHT = 144;
