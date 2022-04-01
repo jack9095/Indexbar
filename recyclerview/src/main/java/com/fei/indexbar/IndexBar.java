@@ -28,23 +28,74 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 目前功能性问题，字母最上方的热区没实现，还有就是 合并缩略功能的实现，和 ListView 的结合使用
  */
 public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchListener, IndexBarTipsView.OnTouchListener {
+    private final static int INDEX_BAR_MIN_HEIGHT = 144;
+
+    private final static int TIPS_DISMISS_TIME = 2000;
+
+    private final static int INDEX_BAR_ONE = 1;
+
+    private final static int INDEX_BAR_THREE = 3;
+
+    private final static int INDEX_BAR_FIVE = 5;
+
+    private final static int INDEX_BAR_SEVEN = 7;
+
+    private final static int INDEX_BAR_NINE = 9;
+
+    private final static int INDEX_BAR_ELEVEN = 11;
+
+    private final static int INDEX_BAR_THIRTEEN = 13;
+
+    private final static int INDEX_BAR_FIFTEEN = 15;
+
+    private final static int INDEX_BAR_SEVENTEEN = 17;
+
+    private final static int ZOOM_TYPE_ONE = 0x00;
+
+    private final static int ZOOM_TYPE_TWO = 0x01;
+
+    private final static int ZOOM_TYPE_THREE = 0x02;
+
+    private final static int ZOOM_TYPE_FOUR = 0x03;
+
+    private final static int ZOOM_TYPE_FIVE = 0x04;
+
+    private final static int SUBSTRING_END_INDEX = 1;
+
+    private final static int ITEM_HEIGHT = 16;
+
+    private final static int ITEM_MARGIN_TOP = 8;
+
+    private final static int ITEM_MARGIN_BOTTOM = 8;
 
     private RecyclerView mRecyclerView;
+
     private MyRecyclerView mMyRecyclerView;
+
     private IndexBarTipsView mIndexBarTipsView;
+
     private IndexBarAdapter mIndexBarAdapter;
+
     private OnTouchListener mOnTouchListener;
+
     private List<IndexBean> mLetters = new ArrayList<>();
+
     private Map<String, List<IndexBean>> mMap = new HashMap<>();
+
     private boolean mIsTouch; // 是否在触摸 索引条 IndexBar
+
     private static final Handler mHandler = new Handler(Looper.getMainLooper());
+
     private List<String> realData;
+
     private LinearLayoutManager mLinearLayoutManager;
+
     private boolean isInit; // 是否是第一次近来初始化
 
     public IndexBar(@NonNull Context context) {
@@ -98,15 +149,15 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
         for (int j = 0; j < strings.size(); j++) {
             List<IndexBean> temps = new LinkedList<>();
             for (int i = 0; i < realData.size(); i++) {
-                String firstLetter = SpellingUtils.getFirstLetter(realData.get(i).substring(0, 1));
+                String firstLetter = SpellingUtils.getFirstLetter(realData.get(i).substring(0, SUBSTRING_END_INDEX));
                 if (TextUtils.equals(strings.get(j), firstLetter)) {
-                    temps.add(new IndexBean(firstLetter, realData.get(i), realData.get(i).substring(0, 1)));
+                    temps.add(new IndexBean(firstLetter, realData.get(i), realData.get(i).substring(0, SUBSTRING_END_INDEX)));
                 }
             }
             mMap.put(strings.get(j), temps);
         }
 
-        setLetters(lists, null, null);
+        syncData(lists, null, null);
     }
 
     /**
@@ -126,16 +177,16 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
         for (int j = 0; j < strings.size(); j++) {
             List<IndexBean> temps = new LinkedList<>();
             for (int i = 0; i < realData.size(); i++) {
-                String firstLetter = SpellingUtils.getFirstLetter(realData.get(i).substring(0, 1));
+                String firstLetter = SpellingUtils.getFirstLetter(realData.get(i).substring(0, SUBSTRING_END_INDEX));
                 if (TextUtils.equals(strings.get(j), firstLetter)) {
-                    temps.add(new IndexBean(firstLetter, realData.get(i), realData.get(i).substring(0, 1)));
+                    temps.add(new IndexBean(firstLetter, realData.get(i), realData.get(i).substring(0, SUBSTRING_END_INDEX)));
                 }
             }
             mMap.put(strings.get(j), temps);
         }
 
         Log.e("fei.wang", "-- lists--> " + lists.size());
-        setLetters(lists, headLetter, null);
+        syncData(lists, headLetter, null);
     }
 
     /**
@@ -157,15 +208,15 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
         for (int j = 0; j < strings.size(); j++) {
             List<IndexBean> temps = new LinkedList<>();
             for (int i = 0; i < realData.size(); i++) {
-                String firstLetter = SpellingUtils.getFirstLetter(realData.get(i).substring(0, 1));
+                String firstLetter = SpellingUtils.getFirstLetter(realData.get(i).substring(0, SUBSTRING_END_INDEX));
                 if (TextUtils.equals(strings.get(j), firstLetter)) {
-                    temps.add(new IndexBean(firstLetter, realData.get(i), realData.get(i).substring(0, 1)));
+                    temps.add(new IndexBean(firstLetter, realData.get(i), realData.get(i).substring(0, SUBSTRING_END_INDEX)));
                 }
             }
             mMap.put(strings.get(j), temps);
         }
 
-        setLetters(lists, headLetter, tailLetter);
+        syncData(lists, headLetter, tailLetter);
     }
 
     /**
@@ -173,11 +224,12 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
      *
      * @param strs 字母集合
      */
-    private void setLetters(List<String> strs, List<String> headLetter, List<String> tailLetter) {
+    private void syncData(List<String> strs, List<String> headLetter, List<String> tailLetter) {
 
         post(new Runnable() {
             @Override
             public void run() {
+                int tempType = Integer.MAX_VALUE; // 使用的那个省略规则
                 int finalSize = 0;
                 if (headLetter != null) {
                     finalSize += headLetter.size();
@@ -186,25 +238,35 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
                 if (tailLetter != null) {
                     finalSize += tailLetter.size();
                 }
+                setVisibility(VISIBLE);
                 List<String> strings = Arrays.asList(getResources().getStringArray(R.array.quickSideBarLetters));
                 List<String> letters = new ArrayList<>();
                 List<String> tempLetter = null;
                 int measuredHeight = getHeight();
-                if (measuredHeight >= getIndexBarHeight(strings.size() + finalSize)) {
+                if (measuredHeight < UDisplayUtil.dp2Px(getContext(), INDEX_BAR_MIN_HEIGHT)) {
+                    setVisibility(GONE);
+                } else if (measuredHeight >= getIndexBarHeight(strings.size() + finalSize)) {
                     tempLetter = strings;
-                } else if (measuredHeight >= getIndexBarHeight(finalSize + 17)) {
+                } else if (measuredHeight >= getIndexBarHeight(finalSize + INDEX_BAR_SEVENTEEN)) {
+                    tempType = ZOOM_TYPE_ONE;
                     tempLetter = Arrays.asList(getContext().getResources().getStringArray(R.array.zoomTwo));
-                } else if (measuredHeight >= getIndexBarHeight(finalSize + 13)) {
+                } else if (measuredHeight >= getIndexBarHeight(finalSize + INDEX_BAR_THIRTEEN)) {
+                    tempType = ZOOM_TYPE_TWO;
                     tempLetter = Arrays.asList(getContext().getResources().getStringArray(R.array.zoomThree));
-                } else if (measuredHeight >= getIndexBarHeight(finalSize + 11)) {
+                } else if (measuredHeight >= getIndexBarHeight(finalSize + INDEX_BAR_ELEVEN)) {
+                    tempType = ZOOM_TYPE_THREE;
                     tempLetter = Arrays.asList(getContext().getResources().getStringArray(R.array.zoomFour));
-                } else if (measuredHeight >= getIndexBarHeight(finalSize + 9)) {
+                } else if (measuredHeight >= getIndexBarHeight(finalSize + INDEX_BAR_NINE)) {
+                    tempType = ZOOM_TYPE_FOUR;
                     tempLetter = Arrays.asList(getContext().getResources().getStringArray(R.array.zoomFive));
-                } else if (measuredHeight >= getIndexBarHeight(finalSize + 7)) {
+                } else if (measuredHeight >= getIndexBarHeight(finalSize + INDEX_BAR_SEVEN)) {
+                    tempType = ZOOM_TYPE_FIVE;
                     tempLetter = Arrays.asList(getContext().getResources().getStringArray(R.array.zoomSix));
                 }
 
+                int headSize = 0;
                 if (headLetter != null) {
+                    headSize = headLetter.size();
                     letters.addAll(headLetter);
                 }
                 if (tempLetter != null) {
@@ -215,9 +277,86 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
                 }
 
                 mLetters.clear();
-                for (String string : letters) {
-                    mLetters.add(new IndexBean(string));
+//                if (headLetter != null) {
+//                    for (String string : headLetter) {
+//                        mLetters.add(new IndexBean(string));
+//                    }
+//                }
+                IndexBean indexBean;
+                for (int i = 0; i < letters.size(); i++) {
+
+                    indexBean = new IndexBean(letters.get(i));
+                    if (tempType == ZOOM_TYPE_ONE) {
+                        if (i - headSize == INDEX_BAR_ONE) {
+                            indexBean.setLists(Arrays.asList("B", "C"));
+                        } else if (i - headSize == INDEX_BAR_THREE) {
+                            indexBean.setLists(Arrays.asList("E", "F"));
+                        } else if (i - headSize == INDEX_BAR_FIVE) {
+                            indexBean.setLists(Arrays.asList("H", "I"));
+                        } else if (i - headSize == INDEX_BAR_SEVEN) {
+                            indexBean.setLists(Arrays.asList("K", "L"));
+                        } else if (i - headSize == INDEX_BAR_NINE) {
+                            indexBean.setLists(Arrays.asList("N", "O"));
+                        } else if (i - headSize == INDEX_BAR_ELEVEN) {
+                            indexBean.setLists(Arrays.asList("Q", "R"));
+                        } else if (i - headSize == INDEX_BAR_THIRTEEN) {
+                            indexBean.setLists(Arrays.asList("T", "U"));
+                        } else if (i - headSize == INDEX_BAR_FIFTEEN) {
+                            indexBean.setLists(Arrays.asList("W", "X", "Y"));
+                        }
+                    } else if (tempType == ZOOM_TYPE_TWO) {
+                        if (i - headSize == INDEX_BAR_ONE) {
+                            indexBean.setLists(Arrays.asList("B", "C", "D"));
+                        } else if (i - headSize == INDEX_BAR_THREE) {
+                            indexBean.setLists(Arrays.asList("F", "G", "H"));
+                        } else if (i - headSize == INDEX_BAR_FIVE) {
+                            indexBean.setLists(Arrays.asList("J", "K", "L"));
+                        } else if (i - headSize == INDEX_BAR_SEVEN) {
+                            indexBean.setLists(Arrays.asList("N", "O", "P"));
+                        } else if (i - headSize == INDEX_BAR_NINE) {
+                            indexBean.setLists(Arrays.asList("R", "S", "T"));
+                        } else if (i - headSize == INDEX_BAR_ELEVEN) {
+                            indexBean.setLists(Arrays.asList("V", "W", "X", "Y"));
+                        }
+                    } else if (tempType == ZOOM_TYPE_THREE) {
+                        if (i - headSize == INDEX_BAR_ONE) {
+                            indexBean.setLists(Arrays.asList("B", "C", "D", "E"));
+                        } else if (i - headSize == INDEX_BAR_THREE) {
+                            indexBean.setLists(Arrays.asList("G", "H", "I", "J"));
+                        } else if (i - headSize == INDEX_BAR_FIVE) {
+                            indexBean.setLists(Arrays.asList("L", "M", "N", "O"));
+                        } else if (i - headSize == INDEX_BAR_SEVEN) {
+                            indexBean.setLists(Arrays.asList("Q", "R", "S", "T"));
+                        } else if (i - headSize == INDEX_BAR_NINE) {
+                            indexBean.setLists(Arrays.asList("V", "W", "X", "Y"));
+                        }
+                    } else if (tempType == ZOOM_TYPE_FOUR) {
+                        if (i - headSize == INDEX_BAR_ONE) {
+                            indexBean.setLists(Arrays.asList("B", "C", "D", "E", "F"));
+                        } else if (i - headSize == INDEX_BAR_THREE) {
+                            indexBean.setLists(Arrays.asList("H", "I", "J", "K", "L"));
+                        } else if (i - headSize == INDEX_BAR_FIVE) {
+                            indexBean.setLists(Arrays.asList("N", "O", "P", "Q", "R"));
+                        } else if (i - headSize == INDEX_BAR_SEVEN) {
+                            indexBean.setLists(Arrays.asList("T", "U", "V", "W", "X", "Y"));
+                        }
+                    } else if (tempType == ZOOM_TYPE_FIVE) {
+                        if (i - headSize == INDEX_BAR_ONE) {
+                            indexBean.setLists(Arrays.asList("B", "C", "D", "E", "F", "G"));
+                        } else if (i - headSize == INDEX_BAR_THREE) {
+                            indexBean.setLists(Arrays.asList("I", "J", "K", "L", "M", "N"));
+                        } else if (i - headSize == INDEX_BAR_FIVE) {
+                            indexBean.setLists(Arrays.asList("P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y"));
+                        }
+                    }
+                    mLetters.add(indexBean);
                 }
+
+//                if (tailLetter != null) {
+//                    for (String string : tailLetter) {
+//                        mLetters.add(new IndexBean(string));
+//                    }
+//                }
                 mIndexBarAdapter.setData(mLetters);
             }
         });
@@ -230,7 +369,7 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
      * @return
      */
     private int getIndexBarHeight(int size) {
-        return size * UDisplayUtil.dp2Px(getContext(), 16) + UDisplayUtil.dp2Px(getContext(), 16);
+        return size * UDisplayUtil.dp2Px(getContext(), ITEM_HEIGHT) + UDisplayUtil.dp2Px(getContext(), ITEM_MARGIN_TOP + ITEM_MARGIN_BOTTOM);
     }
 
     /**
@@ -243,8 +382,22 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
     @Override
     public void onChanged(IndexBean bean, int position, float y) {
         if (mIndexBarTipsView != null) {
-            mIndexBarTipsView.setText(bean.getLetter(), position, y);
-            mIndexBarTipsView.setData(mMap.get(bean.getLetter()));
+            if (TextUtils.equals("·", bean.getLetter())) {
+                if (bean.getLists() != null && bean.getLists().size() > 0) {
+                    mIndexBarTipsView.setText(bean.getLists().get(0), position, y);
+                    List<IndexBean> tips = new ArrayList<>();
+                    for (int i = 0; i < bean.getLists().size(); i++) {
+                        String s = bean.getLists().get(i);
+                        if (!TextUtils.isEmpty(s) && mMap.get(s) != null) {
+                            tips.addAll(Objects.requireNonNull(mMap.get(s)));
+                        }
+                    }
+                    mIndexBarTipsView.setData(tips);
+                }
+            } else {
+                mIndexBarTipsView.setText(bean.getLetter(), position, y);
+                mIndexBarTipsView.setData(mMap.get(bean.getLetter()));
+            }
         }
         if (mOnTouchListener != null) {
             mOnTouchListener.onChanged(bean, position, y, false);
@@ -266,7 +419,7 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
                     return;
                 }
             } else {
-                String key = SpellingUtils.getFirstLetter(realData.get(i).substring(0, 1));
+                String key = SpellingUtils.getFirstLetter(realData.get(i).substring(0, SUBSTRING_END_INDEX));
                 if (("#".equals(bean.getLetter()) && key.startsWith("#")) || TextUtils.equals(key, bean.getLetter())) {
                     mLinearLayoutManager.scrollToPositionWithOffset(i, 0);
                     return;
@@ -307,7 +460,7 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
                 mIndexBarTipsView.setVisibility(View.VISIBLE);
                 mHandler.removeCallbacks(mRunnable);
             } else {
-                mHandler.postDelayed(mRunnable, 2000);
+                mHandler.postDelayed(mRunnable, TIPS_DISMISS_TIME);
             }
         }
     }
@@ -346,7 +499,7 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
             @Override
             public void onScrolled(@NonNull RecyclerView rv, int dx, int dy) {
                 final int position = layoutManager.findFirstCompletelyVisibleItemPosition();
-                String key = SpellingUtils.getFirstLetter(realData.get(position).substring(0, 1));
+                String key = SpellingUtils.getFirstLetter(realData.get(position).substring(0, SUBSTRING_END_INDEX));
                 setCurrentIndex(key);
             }
         });

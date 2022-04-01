@@ -2,6 +2,7 @@ package com.fei.indexbar.model;
 
 import java.io.Serializable;
 import java.util.Comparator;
+import java.util.List;
 
 public class IndexBean implements Serializable {
 
@@ -9,6 +10,7 @@ public class IndexBean implements Serializable {
     private String letter; // 首字母
     private String name;  // 标题
     private String nameFirst;  // 标题第一个文字
+    private List<String> lists;
 
     public IndexBean(String letter) {
         this.letter = letter;
@@ -25,6 +27,14 @@ public class IndexBean implements Serializable {
         this.letter = letter;
         this.name = name;
         this.nameFirst = nameFirst;
+    }
+
+    public List<String> getLists() {
+        return lists;
+    }
+
+    public void setLists(List<String> lists) {
+        this.lists = lists;
     }
 
     public boolean isSelect() {

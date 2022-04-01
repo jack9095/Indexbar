@@ -1,6 +1,7 @@
 package com.fei.lib;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -23,7 +24,12 @@ public class MyClass {
 //        }
 
         for (String s : filterAlphabet(array)) {
-            System.out.print(s + ", ");
+//            System.out.print(s + ", ");
+        }
+
+        List<String> strings = Arrays.asList("BBBBB", "C");
+        for (String string : strings) {
+            System.out.print(string + ", ");
         }
 
     }
