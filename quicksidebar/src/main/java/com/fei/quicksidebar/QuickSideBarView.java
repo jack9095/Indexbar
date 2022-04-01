@@ -227,7 +227,7 @@ public class QuickSideBarView extends View {
     }
 
     /**
-     * 正则过滤出数组字母
+     * 正则去掉数组字母
      */
     private List<String> filterLetter(List<String> array) {
         List<String> lists = new ArrayList<>();

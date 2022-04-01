@@ -1,4 +1,4 @@
-package com.fei.indexbar;
+package com.fei.indexbar.copy;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -17,6 +17,9 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fei.indexbar.IndexBarTipsView;
+import com.fei.indexbar.MyRecyclerView;
+import com.fei.indexbar.R;
 import com.fei.indexbar.adapter.IndexBarAdapter;
 import com.fei.indexbar.model.IndexBean;
 import com.fei.indexbar.util.SpellingUtils;
@@ -32,7 +35,7 @@ import java.util.Map;
 /**
  * 目前功能性问题，字母最上方的热区没实现，还有就是 合并缩略功能的实现，和 ListView 的结合使用
  */
-public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchListener, IndexBarTipsView.OnTouchListener {
+public class IndexBar1 extends RelativeLayout implements MyRecyclerView.OnTouchListener, IndexBarTipsView.OnTouchListener {
 
     private RecyclerView mRecyclerView;
     private MyRecyclerView mMyRecyclerView;
@@ -47,19 +50,19 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
     private LinearLayoutManager mLinearLayoutManager;
     private boolean isInit; // 是否是第一次近来初始化
 
-    public IndexBar(@NonNull Context context) {
+    public IndexBar1(@NonNull Context context) {
         this(context, null);
     }
 
-    public IndexBar(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public IndexBar1(@NonNull Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public IndexBar(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public IndexBar1(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         this(context, attrs, defStyleAttr, 0);
     }
 
-    public IndexBar(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public IndexBar1(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         isInit = true;
         initView();
@@ -106,7 +109,11 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
             mMap.put(strings.get(j), temps);
         }
 
-        setLetters(lists, null, null);
+        mLetters.clear();
+        for (String string : strings) {
+            mLetters.add(new IndexBean(string));
+        }
+        mIndexBarAdapter.setData(mLetters);
     }
 
     /**
@@ -134,6 +141,11 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
             mMap.put(strings.get(j), temps);
         }
 
+//        mLetters.clear();
+//        for (String string : strings) {
+//            mLetters.add(new IndexBean(string));
+//        }
+//        mIndexBarAdapter.setData(mLetters);
         Log.e("fei.wang", "-- lists--> " + lists.size());
         setLetters(lists, headLetter, null);
     }
@@ -165,7 +177,11 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
             mMap.put(strings.get(j), temps);
         }
 
-        setLetters(lists, headLetter, tailLetter);
+        mLetters.clear();
+        for (String string : strings) {
+            mLetters.add(new IndexBean(string));
+        }
+        mIndexBarAdapter.setData(mLetters);
     }
 
     /**
@@ -174,6 +190,10 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
      * @param strs 字母集合
      */
     private void setLetters(List<String> strs, List<String> headLetter, List<String> tailLetter) {
+//        if (strings == null) {
+//            return;
+//        }
+
 
         post(new Runnable() {
             @Override
@@ -187,21 +207,32 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
                     finalSize += tailLetter.size();
                 }
                 List<String> strings = Arrays.asList(getResources().getStringArray(R.array.quickSideBarLetters));
+                Log.e("fei.wang", "size -> " + finalSize);
+                Log.e("fei.wang", "strings.size() -> " + strings.size());
                 List<String> letters = new ArrayList<>();
                 List<String> tempLetter = null;
                 int measuredHeight = getHeight();
+                Log.e("fei.wang", "measuredHeight -> " + measuredHeight);
+                Log.e("fei.wang", "one -> " + getIndexBarHeight(strings.size() + finalSize));
+                Log.e("fei.wang", "two -> " + getIndexBarHeight(finalSize + 17));
                 if (measuredHeight >= getIndexBarHeight(strings.size() + finalSize)) {
+//                    letters.addAll(strings);
                     tempLetter = strings;
                 } else if (measuredHeight >= getIndexBarHeight(finalSize + 17)) {
                     tempLetter = Arrays.asList(getContext().getResources().getStringArray(R.array.zoomTwo));
+//                    letters.addAll(Arrays.asList(getContext().getResources().getStringArray(R.array.zoomTwo)));
                 } else if (measuredHeight >= getIndexBarHeight(finalSize + 13)) {
                     tempLetter = Arrays.asList(getContext().getResources().getStringArray(R.array.zoomThree));
+//                    letters.addAll(Arrays.asList(getContext().getResources().getStringArray(R.array.zoomThree)));
                 } else if (measuredHeight >= getIndexBarHeight(finalSize + 11)) {
                     tempLetter = Arrays.asList(getContext().getResources().getStringArray(R.array.zoomFour));
+//                    letters.addAll(Arrays.asList(getContext().getResources().getStringArray(R.array.zoomFour)));
                 } else if (measuredHeight >= getIndexBarHeight(finalSize + 9)) {
                     tempLetter = Arrays.asList(getContext().getResources().getStringArray(R.array.zoomFive));
+//                    letters.addAll(Arrays.asList(getContext().getResources().getStringArray(R.array.zoomFive)));
                 } else if (measuredHeight >= getIndexBarHeight(finalSize + 7)) {
                     tempLetter = Arrays.asList(getContext().getResources().getStringArray(R.array.zoomSix));
+//                    letters.addAll(Arrays.asList(getContext().getResources().getStringArray(R.array.zoomSix)));
                 }
 
                 if (headLetter != null) {
@@ -219,8 +250,15 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
                     mLetters.add(new IndexBean(string));
                 }
                 mIndexBarAdapter.setData(mLetters);
+//                mItemStartY = (measuredHeight - mLetters.size() * mItemHeight) / 2;
+//                invalidate();
             }
         });
+    }
+
+
+    private void setFilterData() {
+
     }
 
     /**
@@ -230,6 +268,8 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
      * @return
      */
     private int getIndexBarHeight(int size) {
+        Log.e("fei.wang", "size 16dp -> " + UDisplayUtil.dp2Px(getContext(), 16));
+        Log.e("fei.wang", "16dp -> " + UDisplayUtil.dp2Px(getContext(), 16));
         return size * UDisplayUtil.dp2Px(getContext(), 16) + UDisplayUtil.dp2Px(getContext(), 16);
     }
 

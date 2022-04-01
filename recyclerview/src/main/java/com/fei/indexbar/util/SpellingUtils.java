@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * @author Mrlsm
@@ -166,5 +167,35 @@ public class SpellingUtils {
             }
         });
         return result;
+    }
+
+    /**
+     * 正则去掉数组字母
+     */
+    private List<String> filterLetter(List<String> array) {
+        List<String> lists = new ArrayList<>();
+        Pattern p = Pattern.compile("[a-zA-z]");
+        for (String s : array) {
+            //如果包含英文字母我这边不做处理,如果有需求,可以自己添加
+            if (p.matcher(s).find()) {
+                lists.add(s);
+            }
+        }
+        return lists;
+    }
+
+    /**
+     * 正则过滤出数组字母
+     */
+    private List<String> filterString(List<String> array) {
+        List<String> lists = new ArrayList<>();
+        Pattern p = Pattern.compile("[a-zA-z]");
+        for (String s : array) {
+            //如果包含英文字母我这边不做处理,如果有需求,可以自己添加
+            if (!p.matcher(s).find()) {
+                lists.add(s);
+            }
+        }
+        return lists;
     }
 }

@@ -12,6 +12,8 @@ public class DataUtil {
 
     public static List<String> getData() {
         List<String> focusList = new ArrayList<>();
+        focusList.add("#");
+        focusList.add("#");
         focusList.add("北京");
         focusList.add("天津");
         focusList.add("河北");
