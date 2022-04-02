@@ -6,7 +6,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <com.fei.indexbar.IndexBarTipsView
+    <com.fei.indexbar.view.IndexBarTipsView
         android:id="@+id/tips_view"
         android:layout_width="45dp"
         android:layout_toLeftOf="@+id/recycler_view"
@@ -19,7 +19,7 @@
         tools:visibility="visible"
         />
 
-    <com.fei.indexbar.MyRecyclerView
+    <com.fei.indexbar.view.MyRecyclerView
         android:id="@+id/recycler_view"
         android:background="@drawable/u_index_bar_background"
         android:paddingTop="8dp"

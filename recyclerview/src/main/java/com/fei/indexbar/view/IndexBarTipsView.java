@@ -1,4 +1,4 @@
-package com.fei.indexbar;
+package com.fei.indexbar.view;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fei.indexbar.R;
 import com.fei.indexbar.model.IndexBean;
 
 import java.util.List;

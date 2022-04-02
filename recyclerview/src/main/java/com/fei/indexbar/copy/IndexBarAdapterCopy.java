@@ -1,4 +1,4 @@
-package com.fei.indexbar.adapter;
+package com.fei.indexbar.copy;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;

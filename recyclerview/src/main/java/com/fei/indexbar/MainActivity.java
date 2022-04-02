@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.fei.indexbar.adapter.MainIndexBarFocusAdapter;
 import com.fei.indexbar.model.IndexBean;
 import com.fei.indexbar.util.DataUtil;
+import com.fei.indexbar.view.IndexBar;
 
 import java.util.ArrayList;
 import java.util.List;

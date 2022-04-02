@@ -99,7 +99,7 @@ public class QuickActivity extends AppCompatActivity implements OnQuickSideBarTo
     @Override
     public void onLetterTouching(boolean touching) {
         //可以自己加入动画效果渐显渐隐
-//        quickSideBarTipsView.setVisibility(touching? View.VISIBLE:View.INVISIBLE);
+        quickSideBarTipsView.setVisibility(touching? View.VISIBLE:View.INVISIBLE);
     }
 
     private class CityListWithHeadersAdapter extends CityListAdapter<RecyclerView.ViewHolder>
@@ -135,8 +135,8 @@ public class QuickActivity extends AppCompatActivity implements OnQuickSideBarTo
         public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
             TextView textView = (TextView) holder.itemView;
             textView.setText(String.valueOf(getItem(position).getFirstLetter()));
-            holder.itemView.setBackgroundColor(Color.parseColor("#ffffff"));
-//            holder.itemView.setBackgroundColor(getRandomColor());
+//            holder.itemView.setBackgroundColor(Color.parseColor("#ffffff"));
+            holder.itemView.setBackgroundColor(getRandomColor());
         }
 
         private int getRandomColor() {

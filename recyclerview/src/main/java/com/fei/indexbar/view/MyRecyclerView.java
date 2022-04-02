@@ -1,4 +1,4 @@
-package com.fei.indexbar;
+package com.fei.indexbar.view;
 
 import android.content.Context;
 import android.graphics.Rect;
@@ -57,7 +57,7 @@ public class MyRecyclerView extends RecyclerView {
 //        Log.e("fei.wang", "onMeasure  -》 measuredHeight -> " + mHeight);
         if (mLetters != null && mLetters.size() > 0) {
             mItemStartY = (mHeight - mLetters.size() * mItemHeight) / 2;
-//            Log.e("fei.wang","onMeasure  -》 mItemStartY -> " + mItemStartY);
+            Log.e("fei.wang","onMeasure  -》 mItemStartY -> " + mItemStartY);
         }
     }
 
@@ -66,8 +66,10 @@ public class MyRecyclerView extends RecyclerView {
         final int action = event.getAction();
         final float y = event.getY();
         final int oldChoose = mChoose;
-//        Log.e("fei.wang", "滑动距离 -> " + (y - mItemStartY));
-        final int newChoose = (int) ((y - mItemStartY) / mItemHeight);
+//        Log.e("fei.wang", " dispatchTouchEvent  mItemStartY -> " + mItemStartY);
+        // TODO 这里减去的 dp2px(16) 是因为，布局中距离顶部 paddingTop = 8dp, paddingBottom = 8dp
+        final int newChoose = (int) ((y - mItemStartY - dp2px(16)) / mItemHeight);
+                Log.e("fei.wang", "newChoose -> " + newChoose);
         if (action == MotionEvent.ACTION_UP) {
             if (mOnTouchListener != null) {
                 mOnTouchListener.onTouching(false);
@@ -82,7 +84,7 @@ public class MyRecyclerView extends RecyclerView {
                         //计算位置
                         Rect rect = new Rect();
                         float yPos = mItemHeight * mChoose + (int) ((mItemHeight - rect.height()) * 0.5) + mItemStartY;
-                        mOnTouchListener.onChanged(mIndexBarAdapter.getData().get(newChoose), mChoose, yPos);
+                        mOnTouchListener.onChanged(mIndexBarAdapter.getData().get(mChoose), mChoose, yPos);
                     }
                 }
 //                Log.e("fei.wang", "mChoose -> " + mChoose);

@@ -17,8 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.fei.indexbar.IndexBarTipsView;
-import com.fei.indexbar.MyRecyclerView;
+import com.fei.indexbar.view.IndexBarTipsView;
 import com.fei.indexbar.R;
 import com.fei.indexbar.adapter.IndexBarAdapter;
 import com.fei.indexbar.model.IndexBean;

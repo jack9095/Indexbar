@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.fei.indexbar.IndexBar;
+import com.fei.indexbar.view.IndexBar;
 import com.fei.indexbar.R;
 import com.fei.indexbar.adapter.MainIndexBarFocusAdapter;
 import com.fei.indexbar.model.IndexBean;

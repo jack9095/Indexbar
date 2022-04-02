@@ -7,11 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.fei.indexbar.IndexBar;
-import com.fei.indexbar.MyRecyclerView;
 import com.fei.indexbar.OnRecyclerItemClickListener;
 import com.fei.indexbar.R;
-import com.fei.indexbar.model.IndexBean;
 import com.fei.indexbar.util.SpellingUtils;
 import com.fei.indexbar.adapter.MainIndexBarFocusAdapter;
 

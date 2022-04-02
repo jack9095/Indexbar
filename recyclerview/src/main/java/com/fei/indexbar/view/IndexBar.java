@@ -1,4 +1,4 @@
-package com.fei.indexbar;
+package com.fei.indexbar.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fei.indexbar.R;
 import com.fei.indexbar.adapter.IndexBarAdapter;
 import com.fei.indexbar.model.IndexBean;
 import com.fei.indexbar.util.SpellingUtils;
@@ -412,6 +413,7 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
             }
         }
         if (mOnTouchListener != null) {
+            setLocation(bean, false);
             mOnTouchListener.onChanged(bean, position, y, false);
         } else {
             setLocation(bean, false);
@@ -450,6 +452,7 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
     @Override
     public void onClick(View view, IndexBean bean, int position, boolean isLetter) {
         if (mOnTouchListener != null) {
+            setLocation(bean, isLetter);
             mOnTouchListener.onChanged(bean, position, 0, isLetter);
         } else {
             setLocation(bean, isLetter);
