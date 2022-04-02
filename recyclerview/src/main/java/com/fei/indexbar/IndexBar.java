@@ -38,15 +38,25 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
 
     private final static int TIPS_DISMISS_TIME = 2000;
 
-    private final static int INDEX_BAR_ONE = 1;
+    private final static int INDEX_BAR_ONE_POSITION = 1;
 
-    private final static int INDEX_BAR_THREE = 3;
+    private final static int INDEX_BAR_TWO_POSITION = 2;
 
-    private final static int INDEX_BAR_FIVE = 5;
+    private final static int INDEX_BAR_THREE_POSITION = 3;
 
-    private final static int INDEX_BAR_SEVEN = 7;
+    private final static int INDEX_BAR_FOUR_POSITION = 4;
 
-    private final static int INDEX_BAR_NINE = 9;
+    private final static int INDEX_BAR_FIVE_POSITION = 5;
+
+    private final static int INDEX_BAR_SIX_POSITION = 6;
+
+    private final static int INDEX_BAR_SEVEN_POSITION = 7;
+
+    private final static int INDEX_BAR_EIGHT_POSITION = 8;
+
+    private final static int INDEX_BAR_NINE_POSITION = 9;
+
+    private final static int INDEX_BAR_TEN_POSITION = 10;
 
     private final static int INDEX_BAR_ELEVEN = 11;
 
@@ -97,6 +107,10 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
     private LinearLayoutManager mLinearLayoutManager;
 
     private boolean isInit; // 是否是第一次近来初始化
+
+    private int mTempType = Integer.MAX_VALUE; // 使用的那个省略规则
+
+    private int headSize = 0; // 添加到头部的特殊字符数据集合大小
 
     public IndexBar(@NonNull Context context) {
         this(context, null);
@@ -229,7 +243,6 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
         post(new Runnable() {
             @Override
             public void run() {
-                int tempType = Integer.MAX_VALUE; // 使用的那个省略规则
                 int finalSize = 0;
                 if (headLetter != null) {
                     finalSize += headLetter.size();
@@ -248,23 +261,22 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
                 } else if (measuredHeight >= getIndexBarHeight(strings.size() + finalSize)) {
                     tempLetter = strings;
                 } else if (measuredHeight >= getIndexBarHeight(finalSize + INDEX_BAR_SEVENTEEN)) {
-                    tempType = ZOOM_TYPE_ONE;
+                    mTempType = ZOOM_TYPE_ONE;
                     tempLetter = Arrays.asList(getContext().getResources().getStringArray(R.array.zoomTwo));
                 } else if (measuredHeight >= getIndexBarHeight(finalSize + INDEX_BAR_THIRTEEN)) {
-                    tempType = ZOOM_TYPE_TWO;
+                    mTempType = ZOOM_TYPE_TWO;
                     tempLetter = Arrays.asList(getContext().getResources().getStringArray(R.array.zoomThree));
                 } else if (measuredHeight >= getIndexBarHeight(finalSize + INDEX_BAR_ELEVEN)) {
-                    tempType = ZOOM_TYPE_THREE;
+                    mTempType = ZOOM_TYPE_THREE;
                     tempLetter = Arrays.asList(getContext().getResources().getStringArray(R.array.zoomFour));
-                } else if (measuredHeight >= getIndexBarHeight(finalSize + INDEX_BAR_NINE)) {
-                    tempType = ZOOM_TYPE_FOUR;
+                } else if (measuredHeight >= getIndexBarHeight(finalSize + INDEX_BAR_NINE_POSITION)) {
+                    mTempType = ZOOM_TYPE_FOUR;
                     tempLetter = Arrays.asList(getContext().getResources().getStringArray(R.array.zoomFive));
-                } else if (measuredHeight >= getIndexBarHeight(finalSize + INDEX_BAR_SEVEN)) {
-                    tempType = ZOOM_TYPE_FIVE;
+                } else if (measuredHeight >= getIndexBarHeight(finalSize + INDEX_BAR_SEVEN_POSITION)) {
+                    mTempType = ZOOM_TYPE_FIVE;
                     tempLetter = Arrays.asList(getContext().getResources().getStringArray(R.array.zoomSix));
                 }
 
-                int headSize = 0;
                 if (headLetter != null) {
                     headSize = headLetter.size();
                     letters.addAll(headLetter);
@@ -286,16 +298,16 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
                 for (int i = 0; i < letters.size(); i++) {
 
                     indexBean = new IndexBean(letters.get(i));
-                    if (tempType == ZOOM_TYPE_ONE) {
-                        if (i - headSize == INDEX_BAR_ONE) {
+                    if (mTempType == ZOOM_TYPE_ONE) {
+                        if (i - headSize == INDEX_BAR_ONE_POSITION) {
                             indexBean.setLists(Arrays.asList("B", "C"));
-                        } else if (i - headSize == INDEX_BAR_THREE) {
+                        } else if (i - headSize == INDEX_BAR_THREE_POSITION) {
                             indexBean.setLists(Arrays.asList("E", "F"));
-                        } else if (i - headSize == INDEX_BAR_FIVE) {
+                        } else if (i - headSize == INDEX_BAR_FIVE_POSITION) {
                             indexBean.setLists(Arrays.asList("H", "I"));
-                        } else if (i - headSize == INDEX_BAR_SEVEN) {
+                        } else if (i - headSize == INDEX_BAR_SEVEN_POSITION) {
                             indexBean.setLists(Arrays.asList("K", "L"));
-                        } else if (i - headSize == INDEX_BAR_NINE) {
+                        } else if (i - headSize == INDEX_BAR_NINE_POSITION) {
                             indexBean.setLists(Arrays.asList("N", "O"));
                         } else if (i - headSize == INDEX_BAR_ELEVEN) {
                             indexBean.setLists(Arrays.asList("Q", "R"));
@@ -304,48 +316,48 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
                         } else if (i - headSize == INDEX_BAR_FIFTEEN) {
                             indexBean.setLists(Arrays.asList("W", "X", "Y"));
                         }
-                    } else if (tempType == ZOOM_TYPE_TWO) {
-                        if (i - headSize == INDEX_BAR_ONE) {
+                    } else if (mTempType == ZOOM_TYPE_TWO) {
+                        if (i - headSize == INDEX_BAR_ONE_POSITION) {
                             indexBean.setLists(Arrays.asList("B", "C", "D"));
-                        } else if (i - headSize == INDEX_BAR_THREE) {
+                        } else if (i - headSize == INDEX_BAR_THREE_POSITION) {
                             indexBean.setLists(Arrays.asList("F", "G", "H"));
-                        } else if (i - headSize == INDEX_BAR_FIVE) {
+                        } else if (i - headSize == INDEX_BAR_FIVE_POSITION) {
                             indexBean.setLists(Arrays.asList("J", "K", "L"));
-                        } else if (i - headSize == INDEX_BAR_SEVEN) {
+                        } else if (i - headSize == INDEX_BAR_SEVEN_POSITION) {
                             indexBean.setLists(Arrays.asList("N", "O", "P"));
-                        } else if (i - headSize == INDEX_BAR_NINE) {
+                        } else if (i - headSize == INDEX_BAR_NINE_POSITION) {
                             indexBean.setLists(Arrays.asList("R", "S", "T"));
                         } else if (i - headSize == INDEX_BAR_ELEVEN) {
                             indexBean.setLists(Arrays.asList("V", "W", "X", "Y"));
                         }
-                    } else if (tempType == ZOOM_TYPE_THREE) {
-                        if (i - headSize == INDEX_BAR_ONE) {
+                    } else if (mTempType == ZOOM_TYPE_THREE) {
+                        if (i - headSize == INDEX_BAR_ONE_POSITION) {
                             indexBean.setLists(Arrays.asList("B", "C", "D", "E"));
-                        } else if (i - headSize == INDEX_BAR_THREE) {
+                        } else if (i - headSize == INDEX_BAR_THREE_POSITION) {
                             indexBean.setLists(Arrays.asList("G", "H", "I", "J"));
-                        } else if (i - headSize == INDEX_BAR_FIVE) {
+                        } else if (i - headSize == INDEX_BAR_FIVE_POSITION) {
                             indexBean.setLists(Arrays.asList("L", "M", "N", "O"));
-                        } else if (i - headSize == INDEX_BAR_SEVEN) {
+                        } else if (i - headSize == INDEX_BAR_SEVEN_POSITION) {
                             indexBean.setLists(Arrays.asList("Q", "R", "S", "T"));
-                        } else if (i - headSize == INDEX_BAR_NINE) {
+                        } else if (i - headSize == INDEX_BAR_NINE_POSITION) {
                             indexBean.setLists(Arrays.asList("V", "W", "X", "Y"));
                         }
-                    } else if (tempType == ZOOM_TYPE_FOUR) {
-                        if (i - headSize == INDEX_BAR_ONE) {
+                    } else if (mTempType == ZOOM_TYPE_FOUR) {
+                        if (i - headSize == INDEX_BAR_ONE_POSITION) {
                             indexBean.setLists(Arrays.asList("B", "C", "D", "E", "F"));
-                        } else if (i - headSize == INDEX_BAR_THREE) {
+                        } else if (i - headSize == INDEX_BAR_THREE_POSITION) {
                             indexBean.setLists(Arrays.asList("H", "I", "J", "K", "L"));
-                        } else if (i - headSize == INDEX_BAR_FIVE) {
+                        } else if (i - headSize == INDEX_BAR_FIVE_POSITION) {
                             indexBean.setLists(Arrays.asList("N", "O", "P", "Q", "R"));
-                        } else if (i - headSize == INDEX_BAR_SEVEN) {
+                        } else if (i - headSize == INDEX_BAR_SEVEN_POSITION) {
                             indexBean.setLists(Arrays.asList("T", "U", "V", "W", "X", "Y"));
                         }
-                    } else if (tempType == ZOOM_TYPE_FIVE) {
-                        if (i - headSize == INDEX_BAR_ONE) {
+                    } else if (mTempType == ZOOM_TYPE_FIVE) {
+                        if (i - headSize == INDEX_BAR_ONE_POSITION) {
                             indexBean.setLists(Arrays.asList("B", "C", "D", "E", "F", "G"));
-                        } else if (i - headSize == INDEX_BAR_THREE) {
+                        } else if (i - headSize == INDEX_BAR_THREE_POSITION) {
                             indexBean.setLists(Arrays.asList("I", "J", "K", "L", "M", "N"));
-                        } else if (i - headSize == INDEX_BAR_FIVE) {
+                        } else if (i - headSize == INDEX_BAR_FIVE_POSITION) {
                             indexBean.setLists(Arrays.asList("P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y"));
                         }
                     }
@@ -428,6 +440,13 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
         }
     }
 
+    /**
+     * 二级引导（IndexBarTipsView） 列表 item 的点击事件
+     * @param view 对应item 的 View
+     * @param bean 对应item 的实体数据类
+     * @param position 点击 item 的 角标
+     * @param isLetter true 点击的字母，false 点击的是文字目前是汉字，多语言后会有其他文字
+     */
     @Override
     public void onClick(View view, IndexBean bean, int position, boolean isLetter) {
         if (mOnTouchListener != null) {
@@ -442,6 +461,186 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
         isInit = false;
         mIsTouch = touching;
         setTipsViewHide(touching);
+    }
+
+    @Override
+    public void onMoving(IndexBean bean,float y, float currentItemY, int position) {
+        int index = position - headSize;
+        if (mTempType == ZOOM_TYPE_ONE) {
+            if (index == INDEX_BAR_ONE_POSITION) {
+                setIndexBarTipsData(bean, y, currentItemY, index, INDEX_BAR_TWO_POSITION);
+//                indexBean.setLists(Arrays.asList("B", "C"));
+            } else if (index == INDEX_BAR_THREE_POSITION) {
+                setIndexBarTipsData(bean, y, currentItemY, index, INDEX_BAR_TWO_POSITION);
+//                indexBean.setLists(Arrays.asList("E", "F"));
+            } else if (index == INDEX_BAR_FIVE_POSITION) {
+                setIndexBarTipsData(bean, y, currentItemY, index, INDEX_BAR_TWO_POSITION);
+//                indexBean.setLists(Arrays.asList("H", "I"));
+            } else if (index == INDEX_BAR_SEVEN_POSITION) {
+                setIndexBarTipsData(bean, y, currentItemY, index, INDEX_BAR_TWO_POSITION);
+//                indexBean.setLists(Arrays.asList("K", "L"));
+            } else if (index == INDEX_BAR_NINE_POSITION) {
+                setIndexBarTipsData(bean, y, currentItemY, index, INDEX_BAR_TWO_POSITION);
+//                indexBean.setLists(Arrays.asList("N", "O"));
+            } else if (index == INDEX_BAR_ELEVEN) {
+                setIndexBarTipsData(bean, y, currentItemY, index, INDEX_BAR_TWO_POSITION);
+//                indexBean.setLists(Arrays.asList("Q", "R"));
+            } else if (index == INDEX_BAR_THIRTEEN) {
+                setIndexBarTipsData(bean, y, currentItemY, index, INDEX_BAR_TWO_POSITION);
+//                indexBean.setLists(Arrays.asList("T", "U"));
+            } else if (index == INDEX_BAR_FIFTEEN) {
+                setIndexBarTipsData(bean, y, currentItemY, index, INDEX_BAR_THREE_POSITION);
+//                indexBean.setLists(Arrays.asList("W", "X", "Y"));
+            }
+        } else if (mTempType == ZOOM_TYPE_TWO) {
+            if (index == INDEX_BAR_ONE_POSITION) {
+                setIndexBarTipsData(bean, y, currentItemY, index, INDEX_BAR_THREE_POSITION);
+//                indexBean.setLists(Arrays.asList("B", "C", "D"));
+            } else if (index == INDEX_BAR_THREE_POSITION) {
+                setIndexBarTipsData(bean, y, currentItemY, index, INDEX_BAR_THREE_POSITION);
+//                indexBean.setLists(Arrays.asList("F", "G", "H"));
+            } else if (index == INDEX_BAR_FIVE_POSITION) {
+                setIndexBarTipsData(bean, y, currentItemY, index, INDEX_BAR_THREE_POSITION);
+//                indexBean.setLists(Arrays.asList("J", "K", "L"));
+            } else if (index == INDEX_BAR_SEVEN_POSITION) {
+                setIndexBarTipsData(bean, y, currentItemY, index, INDEX_BAR_THREE_POSITION);
+//                indexBean.setLists(Arrays.asList("N", "O", "P"));
+            } else if (index == INDEX_BAR_NINE_POSITION) {
+                setIndexBarTipsData(bean, y, currentItemY, index, INDEX_BAR_THREE_POSITION);
+//                indexBean.setLists(Arrays.asList("R", "S", "T"));
+            } else if (index == INDEX_BAR_ELEVEN) {
+                setIndexBarTipsData(bean, y, currentItemY, index, INDEX_BAR_FOUR_POSITION);
+//                indexBean.setLists(Arrays.asList("V", "W", "X", "Y"));
+            }
+        } else if (mTempType == ZOOM_TYPE_THREE) {
+            if (index == INDEX_BAR_ONE_POSITION) {
+                setIndexBarTipsData(bean, y, currentItemY, index, INDEX_BAR_FOUR_POSITION);
+//                indexBean.setLists(Arrays.asList("B", "C", "D", "E"));
+            } else if (index == INDEX_BAR_THREE_POSITION) {
+                setIndexBarTipsData(bean, y, currentItemY, index, INDEX_BAR_FOUR_POSITION);
+//                indexBean.setLists(Arrays.asList("G", "H", "I", "J"));
+            } else if (index == INDEX_BAR_FIVE_POSITION) {
+                setIndexBarTipsData(bean, y, currentItemY, index, INDEX_BAR_FOUR_POSITION);
+//                indexBean.setLists(Arrays.asList("L", "M", "N", "O"));
+            } else if (index == INDEX_BAR_SEVEN_POSITION) {
+                setIndexBarTipsData(bean, y, currentItemY, index, INDEX_BAR_FOUR_POSITION);
+//                indexBean.setLists(Arrays.asList("Q", "R", "S", "T"));
+            } else if (index == INDEX_BAR_NINE_POSITION) {
+                setIndexBarTipsData(bean, y, currentItemY, index, INDEX_BAR_FOUR_POSITION);
+//                indexBean.setLists(Arrays.asList("V", "W", "X", "Y"));
+            }
+        } else if (mTempType == ZOOM_TYPE_FOUR) {
+            if (index == INDEX_BAR_ONE_POSITION) {
+                setIndexBarTipsData(bean, y, currentItemY, index, INDEX_BAR_FIVE_POSITION);
+//                indexBean.setLists(Arrays.asList("B", "C", "D", "E", "F"));
+            } else if (index == INDEX_BAR_THREE_POSITION) {
+                setIndexBarTipsData(bean, y, currentItemY, index, INDEX_BAR_FIVE_POSITION);
+//                indexBean.setLists(Arrays.asList("H", "I", "J", "K", "L"));
+            } else if (index == INDEX_BAR_FIVE_POSITION) {
+                setIndexBarTipsData(bean, y, currentItemY, index, INDEX_BAR_FIVE_POSITION);
+//                indexBean.setLists(Arrays.asList("N", "O", "P", "Q", "R"));
+            } else if (index == INDEX_BAR_SEVEN_POSITION) {
+                setIndexBarTipsData(bean, y, currentItemY, index, INDEX_BAR_SIX_POSITION);
+//                indexBean.setLists(Arrays.asList("T", "U", "V", "W", "X", "Y"));
+            }
+        } else if (mTempType == ZOOM_TYPE_FIVE) {
+            if (index == INDEX_BAR_ONE_POSITION) {
+                setIndexBarTipsData(bean, y, currentItemY, index, INDEX_BAR_SIX_POSITION);
+//                indexBean.setLists(Arrays.asList("B", "C", "D", "E", "F", "G"));
+            } else if (index == INDEX_BAR_THREE_POSITION) {
+                setIndexBarTipsData(bean, y, currentItemY, index, INDEX_BAR_SIX_POSITION);
+//                indexBean.setLists(Arrays.asList("I", "J", "K", "L", "M", "N"));
+            } else if (index == INDEX_BAR_FIVE_POSITION) {
+                setIndexBarTipsData(bean, y, currentItemY, index, INDEX_BAR_TEN_POSITION);
+//                indexBean.setLists(Arrays.asList("P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y"));
+            }
+        }
+    }
+
+    /**
+     * 滑动到省略的点二级索引展示的列表
+     * @param bean item 对应的实体
+     * @param y 在 item 上的偏移距离
+     * @param index item 对应的下标
+     * @param currentItemY 当前 item 的 Y 轴偏移距离
+     * @param moiety 当前省略的 item 几等份 最大也就是10等分
+     */
+    private void setIndexBarTipsData(IndexBean bean,float y, float currentItemY, int index, int moiety) {
+        if (mIndexBarTipsView != null) {
+            if (TextUtils.equals("·", bean.getLetter())) {
+                if (bean.getLists() != null && bean.getLists().size() > 0) {
+
+                    float itemOffsetY = y - currentItemY; // item 内手指偏移的距离
+
+                    int moietyHeight = UDisplayUtil.dp2Px(getContext(), ITEM_HEIGHT) / moiety; // 没等份的高度
+
+                    float itemOffsetMoietyY = itemOffsetY / moietyHeight; // 手指滑动的距离是否到了等分 item 高度的距离
+
+                    if (itemOffsetMoietyY <= INDEX_BAR_ONE_POSITION) {
+                        String letter = bean.getLists().get(0);
+                        mIndexBarTipsView.setText(letter, index, y);
+                        mIndexBarTipsView.setData(mMap.get(letter));
+                    } else if (itemOffsetMoietyY <= INDEX_BAR_TWO_POSITION) {
+                        if (bean.getLists().size() >= INDEX_BAR_TWO_POSITION) {
+                            String letter = bean.getLists().get(INDEX_BAR_ONE_POSITION);
+                            mIndexBarTipsView.setText(letter, index, y);
+                            mIndexBarTipsView.setData(mMap.get(letter));
+                        }
+                    } else if (itemOffsetMoietyY <= INDEX_BAR_THREE_POSITION) {
+                        if (bean.getLists().size() >= INDEX_BAR_THREE_POSITION) {
+                            String letter = bean.getLists().get(INDEX_BAR_TWO_POSITION);
+                            mIndexBarTipsView.setText(letter, index, y);
+                            mIndexBarTipsView.setData(mMap.get(letter));
+                        }
+                    } else if (itemOffsetMoietyY <= INDEX_BAR_FOUR_POSITION) {
+                        if (bean.getLists().size() >= INDEX_BAR_FOUR_POSITION) {
+                            String letter = bean.getLists().get(INDEX_BAR_THREE_POSITION);
+                            mIndexBarTipsView.setText(letter, index, y);
+                            mIndexBarTipsView.setData(mMap.get(letter));
+                        }
+                    } else if (itemOffsetMoietyY <= INDEX_BAR_FIVE_POSITION) {
+                        if (bean.getLists().size() >= INDEX_BAR_FIVE_POSITION) {
+                            String letter = bean.getLists().get(INDEX_BAR_FOUR_POSITION);
+                            mIndexBarTipsView.setText(letter, index, y);
+                            mIndexBarTipsView.setData(mMap.get(letter));
+                        }
+                    } else if (itemOffsetMoietyY <= INDEX_BAR_SIX_POSITION) {
+                        if (bean.getLists().size() >= INDEX_BAR_SIX_POSITION) {
+                            String letter = bean.getLists().get(INDEX_BAR_FIVE_POSITION);
+                            mIndexBarTipsView.setText(letter, index, y);
+                            mIndexBarTipsView.setData(mMap.get(letter));
+                        }
+                    } else if (itemOffsetMoietyY <= INDEX_BAR_SEVEN_POSITION) {
+                        if (bean.getLists().size() >= INDEX_BAR_SEVEN_POSITION) {
+                            String letter = bean.getLists().get(INDEX_BAR_SIX_POSITION);
+                            mIndexBarTipsView.setText(letter, index, y);
+                            mIndexBarTipsView.setData(mMap.get(letter));
+                        }
+                    } else if (itemOffsetMoietyY <= INDEX_BAR_EIGHT_POSITION) {
+                        if (bean.getLists().size() >= INDEX_BAR_EIGHT_POSITION) {
+                            String letter = bean.getLists().get(INDEX_BAR_SEVEN_POSITION);
+                            mIndexBarTipsView.setText(letter, index, y);
+                            mIndexBarTipsView.setData(mMap.get(letter));
+                        }
+                    } else if (itemOffsetMoietyY <= INDEX_BAR_NINE_POSITION) {
+                        if (bean.getLists().size() >= INDEX_BAR_NINE_POSITION) {
+                            String letter = bean.getLists().get(INDEX_BAR_EIGHT_POSITION);
+                            mIndexBarTipsView.setText(letter, index, y);
+                            mIndexBarTipsView.setData(mMap.get(letter));
+                        }
+                    } else if (itemOffsetMoietyY <= INDEX_BAR_TEN_POSITION) {
+                        if (bean.getLists().size() >= INDEX_BAR_TEN_POSITION) {
+                            String letter = bean.getLists().get(INDEX_BAR_NINE_POSITION);
+                            mIndexBarTipsView.setText(letter, index, y);
+                            mIndexBarTipsView.setData(mMap.get(letter));
+                        }
+                    }
+                }
+            } else {
+                mIndexBarTipsView.setText(bean.getLetter(), index, y);
+                mIndexBarTipsView.setData(mMap.get(bean.getLetter()));
+            }
+        }
     }
 
     private final Runnable mRunnable = new Runnable() {

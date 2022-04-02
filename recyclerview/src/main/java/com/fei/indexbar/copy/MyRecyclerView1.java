@@ -1,4 +1,4 @@
-package com.fei.indexbar;
+package com.fei.indexbar.copy;
 
 import android.content.Context;
 import android.graphics.Rect;
@@ -14,28 +14,26 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fei.indexbar.adapter.IndexBarAdapter;
 import com.fei.indexbar.model.IndexBean;
-import com.fei.indexbar.util.UDisplayUtil;
 
 import java.util.List;
 
-public class MyRecyclerView extends RecyclerView {
+public class MyRecyclerView1 extends RecyclerView {
     private int mChoose = -1;
     private float mItemHeight; // 每一个字母的高度
     private float mItemStartY; // 第一个字母起始位置的 Y 坐标
     private IndexBarAdapter mIndexBarAdapter;
     private OnTouchListener mOnTouchListener;
     private List<String> mLetters;
-    private float mCurrentItemY; // 当前 item 的 Y 轴偏移距离
 
-    public MyRecyclerView(@NonNull Context context) {
+    public MyRecyclerView1(@NonNull Context context) {
         this(context, null);
     }
 
-    public MyRecyclerView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public MyRecyclerView1(@NonNull Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public MyRecyclerView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public MyRecyclerView1(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mItemHeight = dp2px(16);
         ((DefaultItemAnimator) getItemAnimator()).setSupportsChangeAnimations(false);
@@ -66,7 +64,7 @@ public class MyRecyclerView extends RecyclerView {
         final int action = event.getAction();
         final float y = event.getY();
         final int oldChoose = mChoose;
-//        Log.e("fei.wang", "滑动距离 -> " + (y - mItemStartY));
+        Log.e("fei.wang", "滑动距离 -> " + (y - mItemStartY));
         final int newChoose = (int) ((y - mItemStartY) / mItemHeight);
         if (action == MotionEvent.ACTION_UP) {
             if (mOnTouchListener != null) {
@@ -75,7 +73,6 @@ public class MyRecyclerView extends RecyclerView {
 //            Log.e("fei.wang", "mChoose ACTION_UP -> " + mChoose);
         } else {
             if (oldChoose != newChoose) {
-                mCurrentItemY = y - mItemStartY;
                 if (mIndexBarAdapter != null && newChoose >= 0 && newChoose < mIndexBarAdapter.getItemCount()) {
                     mChoose = newChoose;
                     if (mOnTouchListener != null) {
@@ -97,16 +94,7 @@ public class MyRecyclerView extends RecyclerView {
 //                    Log.e("fei.wang", "mChoose letter -> " + mIndexBarAdapter.getData().get(mChoose).getLetter());
                 }
             } else {
-                if (mOnTouchListener != null) {
-                    if (mChoose == 2) {
-                        float v = y - mItemStartY - mCurrentItemY;
-//                        Log.e("fei.wang", "item Y 轴距离 ->" + mCurrentItemY);
-                        int moietyHeight = UDisplayUtil.dp2Px(getContext(), 16) / 10;
-                        Log.e("fei.wang", "item内偏移距离 ->" + v + " item 10等份大小 -> " + moietyHeight);
-                    }
 
-                    mOnTouchListener.onMoving(mIndexBarAdapter.getData().get(mChoose),y - mItemStartY, mCurrentItemY, mChoose);
-                }
             }
             //如果是cancel也要调用onLetterUpListener 通知
             if (event.getAction() == MotionEvent.ACTION_CANCEL) {
@@ -152,29 +140,9 @@ public class MyRecyclerView extends RecyclerView {
     }
 
     public interface OnTouchListener {
-
-        /**
-         * 滑动到 item 的回掉事件
-         * @param bean item 对应的实体
-         * @param position item 对应的下标
-         * @param y 在 item 上的偏移距离
-         */
         void onChanged(IndexBean bean, int position, float y);
 
-        /**
-         * 手指按下和抬起的回掉
-         * @param touching true 手指在屏幕上，false 手指离开屏幕
-         */
         void onTouching(boolean touching);
-
-        /**
-         * 滑动到省略的点二级索引展示的列表
-         * @param bean item 对应的实体
-         * @param y 在 item 上的偏移距离
-         * @param index item 对应的下标
-         * @param currentItemY 当前 item 的 Y 轴偏移距离
-         */
-        void onMoving(IndexBean bean,float y, float currentItemY, int index);
     }
 
 }

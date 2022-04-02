@@ -21,17 +21,25 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.28541666666666665" />
         <entry key="quicksidebar/src/main/res/layout/view_floating_window.xml" value="0.30104166666666665" />
         <entry key="recyclerview/src/main/res-copy/layout/activity_main_copy.xml" value="0.30104166666666665" />
+        <entry key="recyclerview/src/main/res-copy/layout/u_index_bar_item_layout_copy.xml" value="0.30104166666666665" />
+        <entry key="recyclerview/src/main/res-copy/layout/u_index_bar_layout_1.xml" value="0.30104166666666665" />
         <entry key="recyclerview/src/main/res-copy/layout/u_index_bar_layout_copy.xml" value="0.30104166666666665" />
         <entry key="recyclerview/src/main/res/drawable/background_content.xml" value="0.1695" />
         <entry key="recyclerview/src/main/res/drawable/background_shape.xml" value="0.1695" />
         <entry key="recyclerview/src/main/res/drawable/background_title.xml" value="0.1695" />
+        <entry key="recyclerview/src/main/res/drawable/shape_button_warning_default.xml" value="0.1685" />
+        <entry key="recyclerview/src/main/res/drawable/u_index_bar_background.xml" value="0.1685" />
+        <entry key="recyclerview/src/main/res/drawable/u_letter_background_disable.xml" value="0.1685" />
+        <entry key="recyclerview/src/main/res/drawable/u_letter_background_focus.xml" value="0.1685" />
+        <entry key="recyclerview/src/main/res/drawable/u_letter_background_hovered.xml" value="0.1685" />
+        <entry key="recyclerview/src/main/res/drawable/u_letter_selector.xml" value="0.1685" />
         <entry key="recyclerview/src/main/res/layout/activity_main.xml" value="0.28541666666666665" />
         <entry key="recyclerview/src/main/res/layout/activity_main_copy.xml" value="0.30104166666666665" />
         <entry key="recyclerview/src/main/res/layout/index_layout.xml" value="0.30104166666666665" />
         <entry key="recyclerview/src/main/res/layout/item_focus_side_bar.xml" value="0.30104166666666665" />
         <entry key="recyclerview/src/main/res/layout/u_floating_window.xml" value="0.134375" />
         <entry key="recyclerview/src/main/res/layout/u_index_bar_item_layout.xml" value="0.30104166666666665" />
-        <entry key="recyclerview/src/main/res/layout/u_index_bar_layout.xml" value="0.134375" />
+        <entry key="recyclerview/src/main/res/layout/u_index_bar_layout.xml" value="0.25" />
         <entry key="recyclerview/src/main/res/layout/u_index_item_layout.xml" value="0.30104166666666665" />
         <entry key="recyclerview/src/main/res/layout/u_tips_item_layout.xml" value="0.30104166666666665" />
         <entry key="recyclerview/src/main/res/layout/view_floating_window.xml" value="0.30104166666666665" />

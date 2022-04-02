@@ -16,8 +16,20 @@ import com.fei.indexbar.model.IndexBean;
 import java.util.List;
 
 
-public class IndexBarAdapter extends RecyclerView.Adapter<IndexBarAdapter.IndexBarHolder> {
+public class IndexBarAdapterCopy extends RecyclerView.Adapter<IndexBarAdapterCopy.IndexBarHolder> {
+    private static final int DEFAULT_TEXT_SPACE = 8;
+
+    private static final int DEFAULT_ICON_SPACE = 16;
+
+    private static final float SPINNER_PERCENT_TRANSPARENT = 0.3f;
+
+    private static final float SPINNER_OPAQUE = 1.0f;
+
     private List<IndexBean> lists;
+
+//        public IndexBarAdapter(List<String> lists) {
+//            this.lists = lists;
+//        }
 
     public void setData(List<IndexBean> lists) {
         this.lists = lists;
@@ -30,21 +42,21 @@ public class IndexBarAdapter extends RecyclerView.Adapter<IndexBarAdapter.IndexB
 
     @NonNull
     @Override
-    public IndexBarAdapter.IndexBarHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new IndexBarAdapter.IndexBarHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.u_index_bar_item_layout, parent, false));
+    public IndexBarAdapterCopy.IndexBarHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new IndexBarAdapterCopy.IndexBarHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.u_index_bar_item_layout_copy, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull IndexBarAdapter.IndexBarHolder holder, int position) {
+    public void onBindViewHolder(@NonNull IndexBarAdapterCopy.IndexBarHolder holder, int position) {
         if (lists != null && lists.size() > position && position >= 0) {
             String str = lists.get(position).getLetter();
             if (lists.get(position).isSelect()) {
-                holder.mTextView.setBackgroundResource(R.drawable.u_text_background);
+                holder.mLinearLayout.setBackgroundResource(R.drawable.u_text_background);
             } else {
-                holder.mTextView.setBackground(null);
+                holder.mLinearLayout.setBackground(null);
             }
             if (!TextUtils.isEmpty(str)) {
-                holder.mTextView.setText(str);
+                holder.mTitleTextView.setText(str);
                 holder.itemView.setOnClickListener(v -> {
                     if (mOnItemClickListener != null) {
                         mOnItemClickListener.onClick(v, str, position);
@@ -60,12 +72,12 @@ public class IndexBarAdapter extends RecyclerView.Adapter<IndexBarAdapter.IndexB
     }
 
     static class IndexBarHolder extends RecyclerView.ViewHolder {
-        public TextView mTextView;
+        public TextView mTitleTextView;
         public LinearLayout mLinearLayout;
 
         public IndexBarHolder(@NonNull View itemView) {
             super(itemView);
-            mTextView = itemView.findViewById(R.id.text_view);
+            mTitleTextView = itemView.findViewById(R.id.text_view);
             mLinearLayout = itemView.findViewById(R.id.root_view);
         }
     }

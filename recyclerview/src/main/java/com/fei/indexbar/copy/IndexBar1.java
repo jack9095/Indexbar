@@ -35,10 +35,10 @@ import java.util.Map;
 /**
  * 目前功能性问题，字母最上方的热区没实现，还有就是 合并缩略功能的实现，和 ListView 的结合使用
  */
-public class IndexBar1 extends RelativeLayout implements MyRecyclerView.OnTouchListener, IndexBarTipsView.OnTouchListener {
+public class IndexBar1 extends RelativeLayout implements MyRecyclerView1.OnTouchListener, IndexBarTipsView.OnTouchListener {
 
     private RecyclerView mRecyclerView;
-    private MyRecyclerView mMyRecyclerView;
+    private MyRecyclerView1 mMyRecyclerView;
     private IndexBarTipsView mIndexBarTipsView;
     private IndexBarAdapter mIndexBarAdapter;
     private OnTouchListener mOnTouchListener;
@@ -69,7 +69,7 @@ public class IndexBar1 extends RelativeLayout implements MyRecyclerView.OnTouchL
     }
 
     private void initView() {
-        LayoutInflater.from(getContext()).inflate(R.layout.u_index_bar_layout, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.u_index_bar_layout_1, this, true);
         mIndexBarTipsView = findViewById(R.id.tips_view);
         mIndexBarTipsView.setOnTouchListener(this);
         mMyRecyclerView = findViewById(R.id.recycler_view);

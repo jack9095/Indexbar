@@ -19,13 +19,8 @@
         tools:visibility="visible"
         />
 
-    <com.fei.indexbar.MyRecyclerView
+    <com.fei.indexbar.copy.MyRecyclerView1
         android:id="@+id/recycler_view"
-        android:background="@drawable/u_index_bar_background"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp"
         android:layout_alignParentRight="true"
         android:layout_width="24dp"
         android:layout_height="wrap_content"/>

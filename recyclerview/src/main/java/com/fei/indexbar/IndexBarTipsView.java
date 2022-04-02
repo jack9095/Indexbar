@@ -1,10 +1,8 @@
 package com.fei.indexbar;
 
 import android.content.Context;
-import android.graphics.Rect;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -103,7 +101,7 @@ public class IndexBarTipsView extends RelativeLayout {
             if (lists != null && lists.size() > position && position >= 0) {
                 String str = lists.get(position).getNameFirst();
                 if (lists.get(position).isSelect()) {
-                    holder.mTextView.setBackgroundResource(R.drawable.background_shape);
+                    holder.mTextView.setBackgroundResource(R.drawable.u_text_background);
                 } else {
                     holder.mTextView.setBackground(null);
                 }
