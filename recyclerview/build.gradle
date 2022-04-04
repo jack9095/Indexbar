@@ -35,6 +35,7 @@ android {
             res.srcDirs += "src/main/res-copy"
             res.srcDirs += "src/main/res-stick"
             res.srcDirs += "src/main/res-sticktest"
+            res.srcDirs += "src/main/res-stickhead"
         }
     }
 }

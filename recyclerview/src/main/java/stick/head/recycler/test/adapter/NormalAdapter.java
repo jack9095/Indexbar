@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fei.indexbar.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import stick.head.recycler.stick.StickHeaderDecoration1;
@@ -54,7 +53,7 @@ public class NormalAdapter extends RecyclerView.Adapter<NormalAdapter.InnerHolde
 
     @Override
     public InnerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View inflate = LayoutInflater.from(activity).inflate(R.layout.item, parent,
+        View inflate = LayoutInflater.from(activity).inflate(R.layout.item_a, parent,
                 false);
         return new InnerHolder(inflate);
     }

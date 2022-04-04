@@ -30,6 +30,9 @@
         <entry key="recyclerview/src/main/res-stick/layout/user_item.xml" value="0.30104166666666665" />
         <entry key="recyclerview/src/main/res-stick/layout/view_header.xml" value="0.30104166666666665" />
         <entry key="recyclerview/src/main/res-stick/layout/view_item.xml" value="0.30104166666666665" />
+        <entry key="recyclerview/src/main/res-stickhead/layout/activity_stick_header.xml" value="0.30104166666666665" />
+        <entry key="recyclerview/src/main/res-stickhead/layout/item.xml" value="0.30104166666666665" />
+        <entry key="recyclerview/src/main/res-stickhead/layout/item_top.xml" value="0.30104166666666665" />
         <entry key="recyclerview/src/main/res-sticktest/layout/activity_stick_test.xml" value="0.30104166666666665" />
         <entry key="recyclerview/src/main/res-sticktest/layout/item.xml" value="0.30104166666666665" />
         <entry key="recyclerview/src/main/res/drawable/background_content.xml" value="0.1695" />

@@ -12,6 +12,8 @@ public class IndexBean implements Serializable {
     private String nameFirst;  // 标题第一个文字
     private List<String> lists;
 
+    private String id; // 唯一标识符
+
     public IndexBean(String letter) {
         this.letter = letter;
     }
@@ -27,6 +29,14 @@ public class IndexBean implements Serializable {
         this.letter = letter;
         this.name = name;
         this.nameFirst = nameFirst;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public List<String> getLists() {

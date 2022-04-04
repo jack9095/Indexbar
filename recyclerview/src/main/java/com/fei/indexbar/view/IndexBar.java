@@ -413,7 +413,7 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
             }
         }
         if (mOnTouchListener != null) {
-            setLocation(bean, false);
+//            setLocation(bean, false);
             Log.e("fei.wang", "position -> " + position);
             mOnTouchListener.onChanged(bean, position, y, false);
         } else {
@@ -438,6 +438,7 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
                     if (TextUtils.equals(realData.get(i), bean.getName())) {
 //                        mRecyclerView.smoothScrollToPosition(i);
                         Log.e("fei.wang", "i name -> " + i);
+//                        mLinearLayoutManager.scrollToPositionWithOffset(i, -UDisplayUtil.dp2Px(getContext(),36));
                         mLinearLayoutManager.scrollToPositionWithOffset(i, 0);
                         return;
                     }
@@ -446,6 +447,7 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
                     if (("#".equals(bean.getLetter()) && key.startsWith("#")) || TextUtils.equals(key, bean.getLetter())) {
 //                        mRecyclerView.smoothScrollToPosition(i);
                         Log.e("fei.wang", "i -> " + i);
+//                        mLinearLayoutManager.scrollToPositionWithOffset(i, -UDisplayUtil.dp2Px(getContext(),36));
                         mLinearLayoutManager.scrollToPositionWithOffset(i, 0);
                         return;
                     }
@@ -464,7 +466,7 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
     @Override
     public void onClick(View view, IndexBean bean, int position, boolean isLetter) {
         if (mOnTouchListener != null) {
-            setLocation(bean, isLetter);
+//            setLocation(bean, isLetter);
             mOnTouchListener.onChanged(bean, position, 0, isLetter);
         } else {
             setLocation(bean, isLetter);
@@ -684,8 +686,19 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
     }
 
     public interface OnTouchListener {
+        /**
+         * 索引item点击和滑动的回掉事件
+         * @param bean item 对应的实体
+         * @param position item 对应的下标
+         * @param y 在 item 上的偏移距离
+         * @param secondaryIndex true 是二级索引文字点击事件的回掉
+         */
         void onChanged(IndexBean bean, int position, float y, boolean secondaryIndex);
 
+        /**
+         * 手指按下和抬起的回掉
+         * @param touching true 手指在屏幕上，false 手指离开屏幕
+         */
         void onTouching(boolean touching);
     }
 
