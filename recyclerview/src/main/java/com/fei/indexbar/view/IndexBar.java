@@ -414,6 +414,7 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
         }
         if (mOnTouchListener != null) {
             setLocation(bean, false);
+            Log.e("fei.wang", "position -> " + position);
             mOnTouchListener.onChanged(bean, position, y, false);
         } else {
             setLocation(bean, false);
@@ -425,18 +426,29 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
         setTipsViewHide(touching);
     }
 
+    /**
+     *
+     * @param bean
+     * @param secondaryIndex 是否是二级点击事件的回掉
+     */
     private void setLocation(IndexBean bean, boolean secondaryIndex) {
-        for (int i = 0; i < realData.size(); i++) {
-            if (secondaryIndex) {
-                if (TextUtils.equals(realData.get(i), bean.getName())) {
-                    mLinearLayoutManager.scrollToPositionWithOffset(i, 0);
-                    return;
-                }
-            } else {
-                String key = SpellingUtils.getFirstLetter(realData.get(i).substring(0, SUBSTRING_END_INDEX));
-                if (("#".equals(bean.getLetter()) && key.startsWith("#")) || TextUtils.equals(key, bean.getLetter())) {
-                    mLinearLayoutManager.scrollToPositionWithOffset(i, 0);
-                    return;
+        if (realData != null && realData.size() > 0) {
+            for (int i = 0; i < realData.size(); i++) {
+                if (secondaryIndex) {
+                    if (TextUtils.equals(realData.get(i), bean.getName())) {
+//                        mRecyclerView.smoothScrollToPosition(i);
+                        Log.e("fei.wang", "i name -> " + i);
+                        mLinearLayoutManager.scrollToPositionWithOffset(i, 0);
+                        return;
+                    }
+                } else {
+                    String key = SpellingUtils.getFirstLetter(realData.get(i).substring(0, SUBSTRING_END_INDEX));
+                    if (("#".equals(bean.getLetter()) && key.startsWith("#")) || TextUtils.equals(key, bean.getLetter())) {
+//                        mRecyclerView.smoothScrollToPosition(i);
+                        Log.e("fei.wang", "i -> " + i);
+                        mLinearLayoutManager.scrollToPositionWithOffset(i, 0);
+                        return;
+                    }
                 }
             }
         }
@@ -446,7 +458,7 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
      * 二级引导（IndexBarTipsView） 列表 item 的点击事件
      * @param view 对应item 的 View
      * @param bean 对应item 的实体数据类
-     * @param position 点击 item 的 角标
+     * @param position 点击 IndexBarTipsView item 的 角标
      * @param isLetter true 点击的字母，false 点击的是文字目前是汉字，多语言后会有其他文字
      */
     @Override

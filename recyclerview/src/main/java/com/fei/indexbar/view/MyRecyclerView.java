@@ -57,10 +57,11 @@ public class MyRecyclerView extends RecyclerView {
 //        Log.e("fei.wang", "onMeasure  -》 measuredHeight -> " + mHeight);
         if (mLetters != null && mLetters.size() > 0) {
             mItemStartY = (mHeight - mLetters.size() * mItemHeight) / 2;
-            Log.e("fei.wang","onMeasure  -》 mItemStartY -> " + mItemStartY);
+//            Log.e("fei.wang","onMeasure  -》 mItemStartY -> " + mItemStartY);
         }
     }
 
+    int downChoose;
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         final int action = event.getAction();
@@ -69,8 +70,31 @@ public class MyRecyclerView extends RecyclerView {
 //        Log.e("fei.wang", " dispatchTouchEvent  mItemStartY -> " + mItemStartY);
         // TODO 这里减去的 dp2px(16) 是因为，布局中距离顶部 paddingTop = 8dp, paddingBottom = 8dp
         final int newChoose = (int) ((y - mItemStartY - dp2px(16)) / mItemHeight);
-                Log.e("fei.wang", "newChoose -> " + newChoose);
-        if (action == MotionEvent.ACTION_UP) {
+//                Log.e("fei.wang", "newChoose -> " + newChoose);
+        if (action == MotionEvent.ACTION_DOWN) { //按下调用 OnTouchListener
+            if (mOnTouchListener != null) {
+                mOnTouchListener.onTouching(true);
+//                    Log.e("fei.wang", "mChoose ACTION_DOWN -> " + mChoose);
+            }
+            if (mOnTouchListener != null) {
+                //计算位置
+                Rect rect = new Rect();
+                float yPos = mItemHeight * newChoose + (int) ((mItemHeight - rect.height()) * 0.5) + mItemStartY;
+                downChoose = newChoose;
+                mOnTouchListener.onChanged(mIndexBarAdapter.getData().get(newChoose), newChoose, yPos);
+            }
+            if (mIndexBarAdapter != null && mIndexBarAdapter.getData() != null && newChoose >= 0 && newChoose < mIndexBarAdapter.getData().size()) {
+                List<IndexBean> data = mIndexBarAdapter.getData();
+                if (!data.isEmpty()) {
+                    for (int i = 0; i < data.size(); i++) {
+                        data.get(i).setSelect(i == newChoose);
+                    }
+                }
+                mIndexBarAdapter.notifyDataSetChanged();
+//                    Log.e("fei.wang", "mChoose letter -> " + mIndexBarAdapter.getData().get(mChoose).getLetter());
+            }
+        }
+       else if (action == MotionEvent.ACTION_UP) {
             if (mOnTouchListener != null) {
                 mOnTouchListener.onTouching(false);
             }
@@ -80,7 +104,9 @@ public class MyRecyclerView extends RecyclerView {
                 mCurrentItemY = y - mItemStartY;
                 if (mIndexBarAdapter != null && newChoose >= 0 && newChoose < mIndexBarAdapter.getItemCount()) {
                     mChoose = newChoose;
-                    if (mOnTouchListener != null) {
+                    Log.e("fei.wang", "downChoose -> " + downChoose);
+                    Log.e("fei.wang", "newChoose -> " + newChoose);
+                    if (mOnTouchListener != null && downChoose != newChoose) {
                         //计算位置
                         Rect rect = new Rect();
                         float yPos = mItemHeight * mChoose + (int) ((mItemHeight - rect.height()) * 0.5) + mItemStartY;
@@ -104,7 +130,7 @@ public class MyRecyclerView extends RecyclerView {
                         float v = y - mItemStartY - mCurrentItemY;
 //                        Log.e("fei.wang", "item Y 轴距离 ->" + mCurrentItemY);
                         int moietyHeight = UDisplayUtil.dp2Px(getContext(), 16) / 10;
-                        Log.e("fei.wang", "item内偏移距离 ->" + v + " item 10等份大小 -> " + moietyHeight);
+//                        Log.e("fei.wang", "item内偏移距离 ->" + v + " item 10等份大小 -> " + moietyHeight);
                     }
 
                     mOnTouchListener.onMoving(mIndexBarAdapter.getData().get(mChoose),y - mItemStartY, mCurrentItemY, mChoose);
@@ -115,27 +141,28 @@ public class MyRecyclerView extends RecyclerView {
                 if (mOnTouchListener != null) {
                     mOnTouchListener.onTouching(false);
                 }
-            } else if (event.getAction() == MotionEvent.ACTION_DOWN) { //按下调用 OnTouchListener
-                if (mOnTouchListener != null) {
-                    mOnTouchListener.onTouching(true);
-//                    Log.e("fei.wang", "mChoose ACTION_DOWN -> " + mChoose);
-                }
-                if (mOnTouchListener != null) {
-                    //计算位置
-                    Rect rect = new Rect();
-                    float yPos = mItemHeight * mChoose + (int) ((mItemHeight - rect.height()) * 0.5) + mItemStartY;
-                    mOnTouchListener.onChanged(mIndexBarAdapter.getData().get(newChoose), mChoose, yPos);
-                }
-                if (mIndexBarAdapter != null && mIndexBarAdapter.getData() != null && mChoose >= 0 && mChoose < mIndexBarAdapter.getData().size()) {
-                    List<IndexBean> data = mIndexBarAdapter.getData();
-                    if (!data.isEmpty()) {
-                        for (int i = 0; i < data.size(); i++) {
-                            data.get(i).setSelect(i == mChoose);
-                        }
-                    }
-                    mIndexBarAdapter.notifyDataSetChanged();
-//                    Log.e("fei.wang", "mChoose letter -> " + mIndexBarAdapter.getData().get(mChoose).getLetter());
-                }
+//            } else if (event.getAction() == MotionEvent.ACTION_DOWN) { //按下调用 OnTouchListener
+//                if (mOnTouchListener != null) {
+//                    mOnTouchListener.onTouching(true);
+////                    Log.e("fei.wang", "mChoose ACTION_DOWN -> " + mChoose);
+//                }
+//                if (mOnTouchListener != null) {
+//                    //计算位置
+//                    Rect rect = new Rect();
+//                    float yPos = mItemHeight * newChoose + (int) ((mItemHeight - rect.height()) * 0.5) + mItemStartY;
+//                    downChoose = newChoose;
+//                    mOnTouchListener.onChanged(mIndexBarAdapter.getData().get(newChoose), newChoose, yPos);
+//                }
+//                if (mIndexBarAdapter != null && mIndexBarAdapter.getData() != null && newChoose >= 0 && newChoose < mIndexBarAdapter.getData().size()) {
+//                    List<IndexBean> data = mIndexBarAdapter.getData();
+//                    if (!data.isEmpty()) {
+//                        for (int i = 0; i < data.size(); i++) {
+//                            data.get(i).setSelect(i == newChoose);
+//                        }
+//                    }
+//                    mIndexBarAdapter.notifyDataSetChanged();
+////                    Log.e("fei.wang", "mChoose letter -> " + mIndexBarAdapter.getData().get(mChoose).getLetter());
+//                }
             }
         }
         return true;
