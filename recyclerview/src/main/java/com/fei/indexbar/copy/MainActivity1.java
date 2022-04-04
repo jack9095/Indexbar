@@ -85,7 +85,7 @@ public class MainActivity1 extends AppCompatActivity implements IndexBar.OnTouch
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         mIndexBar = findViewById(R.id.index_bar);
         mIndexBar.setRecyclerView(recyclerView, layoutManager);
-        mIndexBar.setData(focusList);
+//        mIndexBar.setData(focusList);
 //        mIndexBar.setOnTouchListener(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(new MainIndexBarFocusAdapter(focusList, R.layout.main_list_item_adapter));

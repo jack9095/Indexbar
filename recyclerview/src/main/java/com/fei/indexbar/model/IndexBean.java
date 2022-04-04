@@ -6,16 +6,44 @@ import java.util.List;
 
 public class IndexBean implements Serializable {
 
-    private boolean isSelect; // 是否选中
+    /**
+     * letter、name、id 这三个是必传的
+     */
     private String letter; // 首字母
     private String name;  // 标题
-    private String nameFirst;  // 标题第一个文字
-    private List<String> lists;
-
     private String id; // 唯一标识符
+    private boolean isImage; // 是图片
+    private int resource; // 图片
 
-    public IndexBean(String letter) {
+
+
+
+
+
+
+
+
+    private boolean isSelect; // 是否选中
+    private String nameFirst;  // 标题第一个文字
+    private List<String> lists; // 省略符号对应的 字母集合
+
+    public IndexBean(String letter, String name, String id) {
+        this.id = id;
+        this.name = name;
         this.letter = letter;
+    }
+
+    public IndexBean(String letter, String id) {
+        this.id = id;
+        this.letter = letter;
+    }
+
+    public IndexBean(String letter, String name, String id, boolean isImage, int resource) {
+        this.id = id;
+        this.name = name;
+        this.letter = letter;
+        this.isImage = isImage;
+        this.resource = resource;
     }
 
     public IndexBean(boolean isSelect, String letter, String name, String nameFirst) {
@@ -25,10 +53,30 @@ public class IndexBean implements Serializable {
         this.nameFirst = nameFirst;
     }
 
-    public IndexBean(String letter, String name, String nameFirst) {
-        this.letter = letter;
-        this.name = name;
+//    public IndexBean(String letter, String name, String nameFirst) {
+//        this.letter = letter;
+//        this.name = name;
+//        this.nameFirst = nameFirst;
+//    }
+
+    public IndexBean(String nameFirst) {
         this.nameFirst = nameFirst;
+    }
+
+    public int getResource() {
+        return resource;
+    }
+
+    public void setResource(int resource) {
+        this.resource = resource;
+    }
+
+    public boolean isImage() {
+        return isImage;
+    }
+
+    public void setImage(boolean image) {
+        isImage = image;
     }
 
     public String getId() {
@@ -75,8 +123,9 @@ public class IndexBean implements Serializable {
         return nameFirst;
     }
 
-    public void setNameFirst(String nameFirst) {
+    public IndexBean setNameFirst(String nameFirst) {
         this.nameFirst = nameFirst;
+        return this;
     }
 
     /**

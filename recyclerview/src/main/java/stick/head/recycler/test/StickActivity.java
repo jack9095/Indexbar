@@ -3,6 +3,7 @@ package stick.head.recycler.test;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fei.indexbar.R;
 import com.fei.indexbar.model.IndexBean;
+import com.fei.indexbar.util.PinyinUtils;
 import com.fei.indexbar.util.SpellingUtils;
 import com.fei.indexbar.util.UDisplayUtil;
 import com.fei.indexbar.view.IndexBar;
@@ -18,11 +20,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Set;
 
 import stick.head.recycler.stickyheadrecycler.StickyRecyclerHeadersDecoration;
 import stick.head.recycler.test.adapter.CityListWithHeadersAdapter;
 import stick.head.recycler.test.model.City;
 import stick.head.recycler.test.model.ModuleUtil;
+import stick.head.recycler.test.model.Pinyin;
 
 /**
  * "☆"
@@ -46,8 +50,13 @@ public class StickActivity extends AppCompatActivity implements IndexBar.OnTouch
         setContentView(R.layout.activity_stick);
         cities = ModuleUtil.getData();
         initViews();
-        String key = SpellingUtils.getFirstLetter("重庆".substring(0, 1));
-        Log.e("fei.wang","重庆 -> " + key);
+//        String key = SpellingUtils.getFirstLetter("重庆".substring(0, 1));
+//        Log.e("fei.wang","重庆 -> " + key);
+//        String key = PinyinUtils.getPinYin("重庆");
+        Set<String> set = Pinyin.getPinyin("重庆");
+        for (String s : set) {
+            Log.e("fei.wang","重庆 -> " + s);
+        }
     }
 
     @Override
@@ -67,13 +76,14 @@ public class StickActivity extends AppCompatActivity implements IndexBar.OnTouch
         mIndexBar = findViewById(R.id.index_bar_stick);
         mIndexBar.setOnTouchListener(this);
 
-        ArrayList<String> customLetters = new ArrayList<>();
+        ArrayList<IndexBean> customLetters = new ArrayList<>();
 
         for (City city : cities) {
-            customLetters.add(city.getCityName());
+            customLetters.add(new IndexBean(city.getFirstLetter(), city.getCityName(),city.getCityName()));
         }
 
-        mIndexBar.setData(customLetters, Arrays.asList("☆"));
+//        mIndexBar.setData(customLetters, Arrays.asList("☆"));
+        mIndexBar.setData(customLetters);
 
         CityListWithHeadersAdapter adapter = new CityListWithHeadersAdapter();
         adapter.addAll(cities);
@@ -101,11 +111,12 @@ public class StickActivity extends AppCompatActivity implements IndexBar.OnTouch
         if (cities != null && cities.size() > 0) {
             for (int i = 0; i < cities.size(); i++) {
                 if (secondaryIndex) {
+//                    if (TextUtils.equals(cities.get(i).getCityName(), bean.getId())) {
                     if (TextUtils.equals(cities.get(i).getCityName(), bean.getName())) {
 //                        mRecyclerView.smoothScrollToPosition(i);
                         Log.e("fei.wang", "i name -> " + i);
-//                        mLinearLayoutManager.scrollToPositionWithOffset(i, -UDisplayUtil.dp2Px(this,36));
-                        mLinearLayoutManager.scrollToPositionWithOffset(i, 0);
+                        mLinearLayoutManager.scrollToPositionWithOffset(i, UDisplayUtil.dp2Px(this,36));
+//                        mLinearLayoutManager.scrollToPositionWithOffset(i, 0);
                         return;
                     }
                 } else {

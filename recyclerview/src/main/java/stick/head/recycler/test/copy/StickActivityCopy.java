@@ -91,7 +91,7 @@ public class StickActivityCopy extends AppCompatActivity implements IndexBar.OnT
 //            position++;
         }
 
-        mIndexBar.setData(customLetters, Arrays.asList("☆"));
+//        mIndexBar.setData(customLetters, Arrays.asList("☆"));
         adapter.addAll(cities);
 //        scrollToNextShotDate(cities);
         mRecyclerView.setAdapter(adapter);

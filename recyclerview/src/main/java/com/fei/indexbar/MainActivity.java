@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements IndexBar.OnTouchL
         ends.add("#");
 //        lists.add("\uD83D\uDD0D");
 
-        mIndexBar.setData(focusList, lists, ends);
+//        mIndexBar.setData(focusList, lists, ends);
 //        mIndexBar.setOnTouchListener(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(new MainIndexBarFocusAdapter(focusList, R.layout.main_list_item_adapter));

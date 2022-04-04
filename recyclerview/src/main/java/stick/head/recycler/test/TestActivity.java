@@ -49,7 +49,7 @@ public class TestActivity extends AppCompatActivity implements IndexBar.OnTouchL
         }
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        mIndexBar.setData(customLetters, Arrays.asList("☆"));
+//        mIndexBar.setData(customLetters, Arrays.asList("☆"));
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(new NormalAdapter(this, cities));
         mRecyclerView.addItemDecoration(new StickHeaderDecoration1(mRecyclerView));

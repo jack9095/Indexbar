@@ -24,12 +24,12 @@ public class MyClass {
 //        }
 
         for (String s : filterAlphabet(array)) {
-//            System.out.print(s + ", ");
+            System.out.print(s + ", ");
         }
 
         List<String> strings = Arrays.asList("BBBBB", "C");
         for (String string : strings) {
-            System.out.print(string + ", ");
+//            System.out.print(string + ", ");
         }
 
     }
@@ -54,7 +54,7 @@ public class MyClass {
         Pattern p = Pattern.compile("[a-zA-Z]");
         for (int i = 0; i < array.length; i++) {
             //如果包含英文字母我这边不做处理,如果有需求,可以自己添加
-            if(p.matcher(array[i]).find()) {
+            if(!p.matcher(array[i]).find()) {
                 lists.add(array[i]);
             }
         }

@@ -30,6 +30,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 /**
  * 目前功能性问题，滑动的过程中把合并的效果也实现出来，和 ListView 的结合使用
@@ -103,7 +104,7 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
 
     private static final Handler mHandler = new Handler(Looper.getMainLooper());
 
-    private List<String> realData;
+    private List<IndexBean> realData; // 列表对应的真实数据
 
     private LinearLayoutManager mLinearLayoutManager;
 
@@ -150,29 +151,35 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
     /**
      * 标题的数据集合，这个方法会把 标题数据集合的首字母提取出来，归类，排序 a,b,c...z
      *
-     * @param lists 标题的数据集合
+     * @param lists 真实的列表数据集合 排好顺序
      */
-    public void setData(List<String> lists) {
-        if (lists == null) {
-            return;
-        }
-        realData = SpellingUtils.stringSort(lists);
-        List<String> strings = Arrays.asList(getResources().getStringArray(R.array.quickSideBarLetters));
-        if (strings == null) {
-            return;
-        }
-        for (int j = 0; j < strings.size(); j++) {
-            List<IndexBean> temps = new LinkedList<>();
-            for (int i = 0; i < realData.size(); i++) {
-                String firstLetter = SpellingUtils.getFirstLetter(realData.get(i).substring(0, SUBSTRING_END_INDEX));
-                if (TextUtils.equals(strings.get(j), firstLetter)) {
-                    temps.add(new IndexBean(firstLetter, realData.get(i), realData.get(i).substring(0, SUBSTRING_END_INDEX)));
-                }
+    public void setData(List<IndexBean> lists) {
+        List<String> headLetter = new ArrayList<>();
+        List<String> tailLetter = new ArrayList<>();
+        boolean isHead = true; // 头部字符串
+        boolean isTail = true; // 尾部字符串
+
+        Pattern p = Pattern.compile("[a-zA-Z]");
+
+//        !p.matcher(list.getLetter()).find() // 表示不包含字母
+
+        for (IndexBean list : lists) {
+            if (list.getLetter().equalsIgnoreCase("A")) {
+                isHead = false;
             }
-            mMap.put(strings.get(j), temps);
+            if (isHead && !headLetter.contains(list.getLetter()) && !p.matcher(list.getLetter()).find()) {
+                headLetter.add(list.getLetter());
+            }
+
+            if (!isTail && !tailLetter.contains(list.getLetter()) && !p.matcher(list.getLetter()).find()) {
+                tailLetter.add(list.getLetter());
+            }
+            if (list.getLetter().equalsIgnoreCase("Z")) {
+                isTail = false;
+            }
         }
 
-        syncData(lists, null, null);
+        setData(lists, headLetter, tailLetter);
     }
 
     /**
@@ -181,54 +188,69 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
      * @param lists      标题的数据集合
      * @param headLetter 放到队列头部特殊符号集合
      */
-    public void setData(List<String> lists, List<String> headLetter) {
-        if (lists == null) {
-            return;
-        }
-        realData = SpellingUtils.stringSort(lists);
-        List<String> strings = new ArrayList<>(headLetter);
-        strings.addAll(Arrays.asList(getResources().getStringArray(R.array.quickSideBarLetters)));
-
-        for (int j = 0; j < strings.size(); j++) {
-            List<IndexBean> temps = new LinkedList<>();
-            for (int i = 0; i < realData.size(); i++) {
-                String firstLetter = SpellingUtils.getFirstLetter(realData.get(i).substring(0, SUBSTRING_END_INDEX));
-                if (TextUtils.equals(strings.get(j), firstLetter)) {
-                    temps.add(new IndexBean(firstLetter, realData.get(i), realData.get(i).substring(0, SUBSTRING_END_INDEX)));
-                }
-            }
-            mMap.put(strings.get(j), temps);
-        }
-
-        Log.e("fei.wang", "-- lists--> " + lists.size());
-        syncData(lists, headLetter, null);
+    public void setData(List<IndexBean> lists, List<String> headLetter) {
+        setData(lists, headLetter, null);
+//        if (lists == null) {
+//            return;
+//        }
+//        realData = SpellingUtils.stringSort(lists);
+//        List<String> strings = new ArrayList<>(headLetter);
+//        strings.addAll(Arrays.asList(getResources().getStringArray(R.array.quickSideBarLetters)));
+//
+//        for (int j = 0; j < strings.size(); j++) {
+//            List<IndexBean> temps = new LinkedList<>();
+//            for (int i = 0; i < realData.size(); i++) {
+//                String firstLetter = SpellingUtils.getFirstLetter(realData.get(i).substring(0, SUBSTRING_END_INDEX));
+//                if (TextUtils.equals(strings.get(j), firstLetter)) {
+//                    temps.add(new IndexBean(firstLetter, realData.get(i), realData.get(i).substring(0, SUBSTRING_END_INDEX)));
+//                }
+//            }
+//            mMap.put(strings.get(j), temps);
+//        }
+//
+//        Log.e("fei.wang", "-- lists--> " + lists.size());
+//        syncData(lists, headLetter, null);
     }
 
     /**
      * 标题的数据集合，这个方法会把 标题数据集合的首字母提取出来，归类，排序 a,b,c...z
      *
-     * @param lists      标题的数据集合
-     * @param headLetter 放到队列头部特殊符号集合
-     * @param tailLetter 放到队列尾部特殊符号集合
+     * @param lists      标题的数据集合，总共的数据集合 按自然顺序排好序的
+     * @param headLetter 放到队列头部特殊符号集合, 方便计算头部高度
+     * @param tailLetter 放到队列尾部特殊符号集合，方便计算尾部的高度
      */
-    public void setData(List<String> lists, List<String> headLetter, List<String> tailLetter) {
+    public void setData(List<IndexBean> lists, List<String> headLetter, List<String> tailLetter) {
         if (lists == null) {
             return;
         }
-        realData = SpellingUtils.stringSort(lists);
-        List<String> strings = new ArrayList<>(headLetter);
-        strings.addAll(Arrays.asList(getResources().getStringArray(R.array.quickSideBarLetters)));
-        strings.addAll(tailLetter);
+        realData = lists;
+//        realData = SpellingUtils.stringSort(lists);
+        List<String> strings = new ArrayList<>();
+//        if (headLetter != null && headLetter.size() > 0) {
+//            strings.addAll(headLetter);
+//        }
+
+        if (Arrays.asList(getResources().getStringArray(R.array.quickSideBarLetters)) != null) {
+            strings.addAll(Arrays.asList(getResources().getStringArray(R.array.quickSideBarLetters)));
+        }
+
+//        if (tailLetter != null && tailLetter.size() > 0) {
+//            strings.addAll(tailLetter);
+//        }
 
         for (int j = 0; j < strings.size(); j++) {
             List<IndexBean> temps = new LinkedList<>();
             for (int i = 0; i < realData.size(); i++) {
-                String firstLetter = SpellingUtils.getFirstLetter(realData.get(i).substring(0, SUBSTRING_END_INDEX));
+//                String firstLetter = SpellingUtils.getFirstLetter(realData.get(i).substring(0, SUBSTRING_END_INDEX));
+                String firstLetter = realData.get(i).getLetter();
                 if (TextUtils.equals(strings.get(j), firstLetter)) {
-                    temps.add(new IndexBean(firstLetter, realData.get(i), realData.get(i).substring(0, SUBSTRING_END_INDEX)));
+//                    temps.add(new IndexBean(firstLetter, realData.get(i).getName().substring(0, SUBSTRING_END_INDEX)));
+//                    temps.add(new IndexBean(realData.get(i).getName().substring(0, SUBSTRING_END_INDEX)));
+                    String substring = realData.get(i).getName().substring(0, SUBSTRING_END_INDEX);
+                    temps.add(realData.get(i).setNameFirst(substring));
                 }
             }
-            mMap.put(strings.get(j), temps);
+            mMap.put(strings.get(j), temps); // TODO key 字母， value 字母对应标题首字母的集合
         }
 
         syncData(lists, headLetter, tailLetter);
@@ -239,7 +261,7 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
      *
      * @param strs 字母集合
      */
-    private void syncData(List<String> strs, List<String> headLetter, List<String> tailLetter) {
+    private void syncData(List<IndexBean> strs, List<String> headLetter, List<String> tailLetter) {
 
         post(new Runnable() {
             @Override
@@ -253,8 +275,8 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
                     finalSize += tailLetter.size();
                 }
                 setVisibility(VISIBLE);
+                // 26 个英文字母
                 List<String> strings = Arrays.asList(getResources().getStringArray(R.array.quickSideBarLetters));
-                List<String> letters = new ArrayList<>();
                 List<String> tempLetter = null;
                 int measuredHeight = getHeight();
                 if (measuredHeight < UDisplayUtil.dp2Px(getContext(), INDEX_BAR_MIN_HEIGHT)) {
@@ -278,6 +300,8 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
                     tempLetter = Arrays.asList(getContext().getResources().getStringArray(R.array.zoomSix));
                 }
 
+                // 真实的 IndexBar 的字母数据集合
+                List<String> letters = new ArrayList<>();
                 if (headLetter != null) {
                     headSize = headLetter.size();
                     letters.addAll(headLetter);
@@ -298,7 +322,7 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
                 IndexBean indexBean;
                 for (int i = 0; i < letters.size(); i++) {
 
-                    indexBean = new IndexBean(letters.get(i));
+                    indexBean = new IndexBean(letters.get(i), letters.get(i));
                     if (mTempType == ZOOM_TYPE_ONE) {
                         if (i - headSize == INDEX_BAR_ONE_POSITION) {
                             indexBean.setLists(Arrays.asList("B", "C"));
@@ -427,15 +451,14 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
     }
 
     /**
-     *
      * @param bean
      * @param secondaryIndex 是否是二级点击事件的回掉
      */
     private void setLocation(IndexBean bean, boolean secondaryIndex) {
-        if (realData != null && realData.size() > 0) {
+        if (realData != null && realData.size() > 0 && mLinearLayoutManager != null) {
             for (int i = 0; i < realData.size(); i++) {
                 if (secondaryIndex) {
-                    if (TextUtils.equals(realData.get(i), bean.getName())) {
+                    if (TextUtils.equals(realData.get(i).getId(), bean.getId())) {
 //                        mRecyclerView.smoothScrollToPosition(i);
                         Log.e("fei.wang", "i name -> " + i);
 //                        mLinearLayoutManager.scrollToPositionWithOffset(i, -UDisplayUtil.dp2Px(getContext(),36));
@@ -443,7 +466,8 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
                         return;
                     }
                 } else {
-                    String key = SpellingUtils.getFirstLetter(realData.get(i).substring(0, SUBSTRING_END_INDEX));
+//                    String key = SpellingUtils.getFirstLetter(realData.get(i).substring(0, SUBSTRING_END_INDEX));
+                    String key = realData.get(i).getLetter();
                     if (("#".equals(bean.getLetter()) && key.startsWith("#")) || TextUtils.equals(key, bean.getLetter())) {
 //                        mRecyclerView.smoothScrollToPosition(i);
                         Log.e("fei.wang", "i -> " + i);
@@ -458,8 +482,9 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
 
     /**
      * 二级引导（IndexBarTipsView） 列表 item 的点击事件
-     * @param view 对应item 的 View
-     * @param bean 对应item 的实体数据类
+     *
+     * @param view     对应item 的 View
+     * @param bean     对应item 的实体数据类
      * @param position 点击 IndexBarTipsView item 的 角标
      * @param isLetter true 点击的字母，false 点击的是文字目前是汉字，多语言后会有其他文字
      */
@@ -481,7 +506,7 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
     }
 
     @Override
-    public void onMoving(IndexBean bean,float y, float currentItemY, int position) {
+    public void onMoving(IndexBean bean, float y, float currentItemY, int position) {
         int index = position - headSize;
         if (mTempType == ZOOM_TYPE_ONE) {
             if (index == INDEX_BAR_ONE_POSITION) {
@@ -576,13 +601,14 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
 
     /**
      * 滑动到省略的点二级索引展示的列表
-     * @param bean item 对应的实体
-     * @param y 在 item 上的偏移距离
-     * @param index item 对应的下标
+     *
+     * @param bean         item 对应的实体
+     * @param y            在 item 上的偏移距离
+     * @param index        item 对应的下标
      * @param currentItemY 当前 item 的 Y 轴偏移距离
-     * @param moiety 当前省略的 item 几等份 最大也就是10等分
+     * @param moiety       当前省略的 item 几等份 最大也就是10等分
      */
-    private void setIndexBarTipsData(IndexBean bean,float y, float currentItemY, int index, int moiety) {
+    private void setIndexBarTipsData(IndexBean bean, float y, float currentItemY, int index, int moiety) {
         if (mIndexBarTipsView != null) {
             if (TextUtils.equals("·", bean.getLetter())) {
                 if (bean.getLists() != null && bean.getLists().size() > 0) {
@@ -688,15 +714,17 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
     public interface OnTouchListener {
         /**
          * 索引item点击和滑动的回掉事件
-         * @param bean item 对应的实体
-         * @param position item 对应的下标
-         * @param y 在 item 上的偏移距离
+         *
+         * @param bean           item 对应的实体
+         * @param position       item 对应的下标
+         * @param y              在 item 上的偏移距离
          * @param secondaryIndex true 是二级索引文字点击事件的回掉
          */
         void onChanged(IndexBean bean, int position, float y, boolean secondaryIndex);
 
         /**
          * 手指按下和抬起的回掉
+         *
          * @param touching true 手指在屏幕上，false 手指离开屏幕
          */
         void onTouching(boolean touching);
@@ -726,7 +754,8 @@ public class IndexBar extends RelativeLayout implements MyRecyclerView.OnTouchLi
             @Override
             public void onScrolled(@NonNull RecyclerView rv, int dx, int dy) {
                 final int position = layoutManager.findFirstCompletelyVisibleItemPosition();
-                String key = SpellingUtils.getFirstLetter(realData.get(position).substring(0, SUBSTRING_END_INDEX));
+//                String key = SpellingUtils.getFirstLetter(realData.get(position).substring(0, SUBSTRING_END_INDEX));
+                String key = realData.get(position).getLetter();
                 setCurrentIndex(key);
             }
         });
