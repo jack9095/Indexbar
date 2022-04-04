@@ -27,6 +27,9 @@ import recyclerview.test.model.ModuleUtil;
 /**
  * "☆"
  *  头部粘贴 RecyclerView 的使用
+ *
+ *  上传 mavenCenter 仓库
+ *  https://www.jianshu.com/p/f142ed636bf3
  */
 public class StickActivity extends AppCompatActivity implements IndexBar.OnTouchListener {
     RecyclerView mRecyclerView;

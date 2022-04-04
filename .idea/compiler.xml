@@ -8,6 +8,7 @@
       <module name="Indexbar.recyclerview" target="11" />
       <module name="Indexbar.sidebardemo" target="11" />
       <module name="Indexbar.SideBarView" target="11" />
+      <module name="Indexbar.StickHeadView" target="11" />
       <module name="Indexbar.waveSideBar" target="11" />
     </bytecodeTargetLevel>
   </component>

@@ -26,6 +26,8 @@ import listview.stickhead.StickyListHeadersListView;
 
 /**
  * @author Emil Sjölander
+ * 上传 mavenCenter 仓库
+ * https://www.jianshu.com/p/f142ed636bf3
  */
 public class TestActivity extends AppCompatActivity implements
         AdapterView.OnItemClickListener, StickyListHeadersListView.OnHeaderClickListener,
