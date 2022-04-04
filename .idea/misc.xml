@@ -55,6 +55,13 @@
         <entry key="recyclerview/src/main/res/layout/u_index_item_layout.xml" value="0.30104166666666665" />
         <entry key="recyclerview/src/main/res/layout/u_tips_item_layout.xml" value="0.30104166666666665" />
         <entry key="recyclerview/src/main/res/layout/view_floating_window.xml" value="0.30104166666666665" />
+        <entry key="sidebardemo/src/main/res-stickhead-list/drawable/header_selector.xml" value="0.1695" />
+        <entry key="sidebardemo/src/main/res-stickhead-list/layout/expandable_sample.xml" value="0.30104166666666665" />
+        <entry key="sidebardemo/src/main/res-stickhead-list/layout/header.xml" value="0.30104166666666665" />
+        <entry key="sidebardemo/src/main/res-stickhead-list/layout/list_footer.xml" value="0.30104166666666665" />
+        <entry key="sidebardemo/src/main/res-stickhead-list/layout/list_header.xml" value="0.30104166666666665" />
+        <entry key="sidebardemo/src/main/res-stickhead-list/layout/main.xml" value="0.30104166666666665" />
+        <entry key="sidebardemo/src/main/res-stickhead-list/layout/test_list_item_layout.xml" value="0.30104166666666665" />
         <entry key="sidebardemo/src/main/res-stickhead/layout/activity_stick.xml" value="0.30104166666666665" />
         <entry key="sidebardemo/src/main/res-stickhead/layout/view_header.xml" value="0.30104166666666665" />
         <entry key="sidebardemo/src/main/res-stickhead/layout/view_item.xml" value="0.30104166666666665" />
