@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import stick.head.recycler.stickyheadrecycler.StickyRecyclerHeadersDecoration;
@@ -43,6 +44,7 @@ public class StickActivity extends AppCompatActivity implements IndexBar.OnTouch
     private IndexBar mIndexBar;
     private LinkedList<City> cities;
     private LinearLayoutManager mLinearLayoutManager;
+    private CityListWithHeadersAdapter mCityListWithHeadersAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,10 +87,10 @@ public class StickActivity extends AppCompatActivity implements IndexBar.OnTouch
 //        mIndexBar.setData(customLetters, Arrays.asList("☆"));
         mIndexBar.setData(customLetters);
 
-        CityListWithHeadersAdapter adapter = new CityListWithHeadersAdapter();
-        adapter.addAll(cities);
-        mRecyclerView.setAdapter(adapter);
-        final StickyRecyclerHeadersDecoration headersDecor = new StickyRecyclerHeadersDecoration(adapter);
+        mCityListWithHeadersAdapter = new CityListWithHeadersAdapter();
+        mCityListWithHeadersAdapter.addAll(cities);
+        mRecyclerView.setAdapter(mCityListWithHeadersAdapter);
+        final StickyRecyclerHeadersDecoration headersDecor = new StickyRecyclerHeadersDecoration(mCityListWithHeadersAdapter);
         mRecyclerView.addItemDecoration(headersDecor);
 
         mIndexBar.setRecyclerView(mRecyclerView, mLinearLayoutManager);
@@ -103,7 +105,7 @@ public class StickActivity extends AppCompatActivity implements IndexBar.OnTouch
     /**
      * 索引item点击和滑动的回掉事件
      * @param bean item 对应的实体
-     * @param position item 对应的下标
+     * @param position 索引 item 对应的下标
      * @param y 在 item 上的偏移距离
      * @param secondaryIndex true 是二级索引文字点击事件的回掉
      */
@@ -114,9 +116,15 @@ public class StickActivity extends AppCompatActivity implements IndexBar.OnTouch
 //                    if (TextUtils.equals(cities.get(i).getCityName(), bean.getId())) {
                     if (TextUtils.equals(cities.get(i).getCityName(), bean.getName())) {
 //                        mRecyclerView.smoothScrollToPosition(i);
+                        List<Integer> headPosition = mCityListWithHeadersAdapter.getHeadPosition();
+
                         Log.e("fei.wang", "i name -> " + i);
-                        mLinearLayoutManager.scrollToPositionWithOffset(i, UDisplayUtil.dp2Px(this,36));
-//                        mLinearLayoutManager.scrollToPositionWithOffset(i, 0);
+                        if (headPosition.contains(i)) {
+                            mLinearLayoutManager.scrollToPositionWithOffset(i, 0);
+                        } else {
+                            // TODO 这里偏移的 36 dp 是粘贴头部的高度
+                            mLinearLayoutManager.scrollToPositionWithOffset(i, UDisplayUtil.dp2Px(this, 36));
+                        }
                         return;
                     }
                 } else {
@@ -127,7 +135,6 @@ public class StickActivity extends AppCompatActivity implements IndexBar.OnTouch
                         Log.e("fei.wang", "key -> " + key);
                         Log.e("fei.wang", "bean.getLetter() -> " + bean.getLetter());
                         Log.e("fei.wang", "i -> " + i);
-//                        mLinearLayoutManager.scrollToPositionWithOffset(i, -UDisplayUtil.dp2Px(this,36));
                         mLinearLayoutManager.scrollToPositionWithOffset(i, 0);
                         return;
                     }

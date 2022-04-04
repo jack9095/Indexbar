@@ -1,6 +1,7 @@
 package stick.head.recycler.test.adapter;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.fei.indexbar.R;
 
 import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.List;
 
 import stick.head.recycler.stickyheadrecycler.StickyRecyclerHeadersAdapter;
 
@@ -19,6 +22,13 @@ import stick.head.recycler.stickyheadrecycler.StickyRecyclerHeadersAdapter;
  */
 public class CityListWithHeadersAdapter extends CityListAdapter<RecyclerView.ViewHolder>
         implements StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder> {
+
+    public List<Integer> getHeadPosition() {
+        return headPosition;
+    }
+
+    private List<Integer> headPosition = new ArrayList<>();
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -48,9 +58,11 @@ public class CityListWithHeadersAdapter extends CityListAdapter<RecyclerView.Vie
 
     @Override
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
+        headPosition.add(position);
+        Log.e("fei.wang", "adapter -> " + position);
         TextView textView = (TextView) holder.itemView;
         textView.setText(String.valueOf(getItem(position).getFirstLetter()));
-            holder.itemView.setBackgroundColor(Color.parseColor("#ffffff"));
+        holder.itemView.setBackgroundColor(Color.parseColor("#ffffff"));
 //        holder.itemView.setBackgroundColor(getRandomColor());
     }
 

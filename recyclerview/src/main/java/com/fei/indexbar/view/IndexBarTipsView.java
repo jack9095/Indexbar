@@ -59,7 +59,7 @@ public class IndexBarTipsView extends RelativeLayout {
             @Override
             public void onClick(View view) {
                 if (mOnTouchListener != null && !TextUtils.isEmpty(mTextView.getText())) {
-                    mOnTouchListener.onClick(view, new IndexBean(mTextView.getText().toString()), 0, false);
+                    mOnTouchListener.onClick(view, new IndexBean(mTextView.getText().toString(), mTextView.getText().toString()), 0, false);
                 }
             }
         });
