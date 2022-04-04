@@ -44,6 +44,7 @@
         <entry key="recyclerview/src/main/res/drawable/u_letter_background_focus.xml" value="0.1685" />
         <entry key="recyclerview/src/main/res/drawable/u_letter_background_hovered.xml" value="0.1685" />
         <entry key="recyclerview/src/main/res/drawable/u_letter_selector.xml" value="0.1685" />
+        <entry key="recyclerview/src/main/res/drawable/u_text_background.xml" value="0.246" />
         <entry key="recyclerview/src/main/res/layout/activity_main.xml" value="0.28541666666666665" />
         <entry key="recyclerview/src/main/res/layout/activity_main_copy.xml" value="0.30104166666666665" />
         <entry key="recyclerview/src/main/res/layout/index_layout.xml" value="0.30104166666666665" />
@@ -54,6 +55,17 @@
         <entry key="recyclerview/src/main/res/layout/u_index_item_layout.xml" value="0.30104166666666665" />
         <entry key="recyclerview/src/main/res/layout/u_tips_item_layout.xml" value="0.30104166666666665" />
         <entry key="recyclerview/src/main/res/layout/view_floating_window.xml" value="0.30104166666666665" />
+        <entry key="sidebardemo/src/main/res-stickhead/layout/activity_stick.xml" value="0.30104166666666665" />
+        <entry key="sidebardemo/src/main/res-stickhead/layout/view_header.xml" value="0.30104166666666665" />
+        <entry key="sidebardemo/src/main/res-stickhead/layout/view_item.xml" value="0.30104166666666665" />
+        <entry key="sidebardemo/src/main/res/drawable/background_title.xml" value="0.1695" />
+        <entry key="sidebardemo/src/main/res/drawable/u_letter_background_focus.xml" value="0.1695" />
+        <entry key="sidebardemo/src/main/res/drawable/u_text_background.xml" value="0.1695" />
+        <entry key="sidebardemo/src/main/res/layout/activity_main.xml" value="0.30104166666666665" />
+        <entry key="sidebardemo/src/main/res/layout/u_floating_window.xml" value="0.30104166666666665" />
+        <entry key="sidebardemo/src/main/res/layout/u_index_bar_item_layout.xml" value="0.30104166666666665" />
+        <entry key="sidebardemo/src/main/res/layout/u_index_bar_layout.xml" value="0.30104166666666665" />
+        <entry key="sidebardemo/src/main/res/layout/u_tips_item_layout.xml" value="0.30104166666666665" />
       </map>
     </option>
   </component>

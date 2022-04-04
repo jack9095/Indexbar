@@ -1,4 +1,4 @@
-package com.fei.indexbar.view;
+package com.fei.sidebardemo.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -17,11 +17,10 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.fei.indexbar.R;
-import com.fei.indexbar.adapter.IndexBarAdapter;
-import com.fei.indexbar.model.IndexBean;
-import com.fei.indexbar.util.SpellingUtils;
-import com.fei.indexbar.util.UDisplayUtil;
+import com.fei.sidebardemo.R;
+import com.fei.sidebardemo.adapter.IndexBarAdapter;
+import com.fei.sidebardemo.model.IndexBean;
+import com.fei.sidebardemo.util.UDisplayUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
