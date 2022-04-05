@@ -11,15 +11,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/MyJava" />
-            <option value="$PROJECT_DIR$/SideBarView" />
             <option value="$PROJECT_DIR$/StickHeadView" />
-            <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/focussidebar" />
-            <option value="$PROJECT_DIR$/quicksidebar" />
-            <option value="$PROJECT_DIR$/recyclerview" />
-            <option value="$PROJECT_DIR$/sidebardemo" />
-            <option value="$PROJECT_DIR$/waveSideBar" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

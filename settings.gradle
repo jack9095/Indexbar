@@ -15,12 +15,12 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Indexbar"
-include ':app'
-include ':focussidebar'
-include ':SideBarView'
-include ':quicksidebar'
-include ':waveSideBar'
-include ':MyJava'
-include ':recyclerview'
-include ':sidebardemo'
+//include ':app'
+//include ':focussidebar'
+//include ':SideBarView'
+//include ':quicksidebar'
+//include ':waveSideBar'
+//include ':MyJava'
+//include ':recyclerview'
+//include ':sidebardemo'
 include ':StickHeadView'
