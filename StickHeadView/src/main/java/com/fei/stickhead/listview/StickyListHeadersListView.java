@@ -25,7 +25,7 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.SectionIndexer;
 
-import com.fei.sidebardemo.R;
+import com.fei.stickhead.R;
 
 
 /**
